@@ -24,7 +24,7 @@ public class LockSystem : MonoBehaviour
 
     private bool lockSystemEnabled = false;
 
-    private int currentStep = 0; // Tracks sequence
+    private int currentStep = 0; 
     private Transform[] locks;
     private GameObject[] cards;
     private float[] zRotations;
