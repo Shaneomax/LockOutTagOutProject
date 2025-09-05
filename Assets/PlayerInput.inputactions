@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SwitchLights",
+                    "type": "Button",
+                    "id": "838c2703-d8c0-4467-b85f-62e24ba55139",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -111,6 +120,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookAt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d30b3385-0aff-4593-901c-5501b64e75d8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchLights",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
