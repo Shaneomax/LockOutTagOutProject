@@ -1,22 +1,24 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
 public class SlidingDoorSystem : MonoBehaviour
 {
-    [Header("Door Parts (order 1-4)")]
+    [Header("Door Parts in Order")]
     public Transform part1;
     public Transform part2;
     public Transform part3;
     public Transform part4;
 
-    [Header("Movement Settings")]
-    public float moveSpeed = 2f;      
-    public float rayDistance = 5f;   
+    [Header("Settings")]
+    public float moveSpeed = 2f;
+    public float rayDistance = 5f;
 
-    [Header("Refs")]
+    [Header("References")]
     public Camera playerCamera;
     public StepPuzzleSystem puzzleSystem;
+    public LockSystem lockSystem; 
 
     private bool isOpening = false;
 
@@ -24,44 +26,41 @@ public class SlidingDoorSystem : MonoBehaviour
     {
         if (!context.performed || isOpening) return;
 
-        // Must be unlocked by puzzle
-        if (puzzleSystem == null || !puzzleSystem.IsDoorUnlocked)
+        if (puzzleSystem == null || !puzzleSystem.IsDoorUnlocked())
         {
             Debug.Log("Door is locked!");
             return;
         }
 
-        // Must click the door
         Ray ray = playerCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
-        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance) && hit.collider.CompareTag("Door"))
+        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance))
         {
-            StartCoroutine(OpenDoorSequence());
+            if (hit.collider.CompareTag("Door"))
+            {
+                StartCoroutine(OpenDoor());
+            }
         }
     }
 
-    private IEnumerator OpenDoorSequence()
+    private IEnumerator OpenDoor()
     {
         isOpening = true;
 
-        yield return MovePartToTarget(part1, part2.position);
+        yield return MovePartsTogether(new[] { part1 }, part2.position);
+        yield return MovePartsTogether(new[] { part1, part2 }, part3.position);
+        yield return MovePartsTogether(new[] { part1, part2, part3 }, part4.position);
 
-        yield return MoveMultipleParts(new[] { part1, part2 }, part3.position);
-
-        yield return MoveMultipleParts(new[] { part1, part2, part3 }, part4.position);
+        isOpening = false;
 
         Debug.Log("Door fully opened!");
-    }
 
-    private IEnumerator MovePartToTarget(Transform part, Vector3 target)
-    {
-        while (Vector3.Distance(part.position, target) > 0.01f)
+        if (lockSystem != null)
         {
-            part.position = Vector3.MoveTowards(part.position, target, moveSpeed * Time.deltaTime);
-            yield return null;
+            lockSystem.EnableLockSystem();
         }
     }
 
-    private IEnumerator MoveMultipleParts(Transform[] parts, Vector3 target)
+    private IEnumerator MovePartsTogether(Transform[] parts, Vector3 target)
     {
         bool allReached = false;
 
@@ -73,9 +72,7 @@ public class SlidingDoorSystem : MonoBehaviour
             {
                 part.position = Vector3.MoveTowards(part.position, target, moveSpeed * Time.deltaTime);
                 if (Vector3.Distance(part.position, target) > 0.01f)
-                {
                     allReached = false;
-                }
             }
 
             yield return null;

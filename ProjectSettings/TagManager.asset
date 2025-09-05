@@ -8,6 +8,7 @@ TagManager:
   - Key
   - YellowButton
   - Door
+  - Lock
   layers:
   - Default
   - TransparentFX

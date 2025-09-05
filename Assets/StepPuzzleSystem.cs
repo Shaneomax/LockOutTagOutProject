@@ -43,7 +43,6 @@ public class StepPuzzleSystem : MonoBehaviour
                 yellowLight.enabled = true;
                 Debug.Log("Yellow light activated!");
 
-                CheckDoorUnlock();
             }
         }
     }
@@ -60,19 +59,9 @@ public class StepPuzzleSystem : MonoBehaviour
         Debug.Log("Keys swapped!");
     }
 
-    void CheckDoorUnlock()
+    public bool IsDoorUnlocked()
     {
-        if (redLight.enabled && keysSwapped && yellowButtonPressed)
-        {
-            Debug.Log("Door unlocked!");
-        }
-    }
-    public bool IsDoorUnlocked
-    {
-        get
-        {
-            return redLight.enabled && keysSwapped && yellowLight.enabled;
-        }
+        return redLight.enabled && keysSwapped && yellowLight.enabled;
     }
 
 }
