@@ -7,6 +7,7 @@ TagManager:
   - Switch
   - Key
   - YellowButton
+  - Door
   layers:
   - Default
   - TransparentFX

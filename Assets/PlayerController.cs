@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     public float MoveSpeed = 5f;
 
     private Vector2 _moveInput;
-    private bool _isGrounded = true;
 
     private void Awake()
     {

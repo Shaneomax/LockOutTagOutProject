@@ -15,7 +15,7 @@ public class StepPuzzleSystem : MonoBehaviour
     public Camera playerCamera;
     public float rayDistance = 5f;
 
-    private bool keysSwapped = false;
+    public bool keysSwapped = false;
     private bool yellowButtonPressed = false;
 
     void Start()
@@ -67,4 +67,12 @@ public class StepPuzzleSystem : MonoBehaviour
             Debug.Log("Door unlocked!");
         }
     }
+    public bool IsDoorUnlocked
+    {
+        get
+        {
+            return redLight.enabled && keysSwapped && yellowLight.enabled;
+        }
+    }
+
 }

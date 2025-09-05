@@ -7,12 +7,6 @@ public class PlayerCamera : MonoBehaviour
     public float mouseSensitivity = 100f;
     private float xRotation;
 
-    void Start()
-    {
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = true;
-    }
-
     public void OnLook(InputAction.CallbackContext context)
     {
         Vector2 look = context.ReadValue<Vector2>();
