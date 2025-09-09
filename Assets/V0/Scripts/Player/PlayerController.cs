@@ -10,27 +10,20 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
-    private void Awake()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    private void OnEnable()
-    {
-        if (InputManager.Instance != null)
-        {
             InputManager.Instance.OnMove += HandleMove;
             InputManager.Instance.OnInteract += HandleInteract;
-        }
     }
 
     private void OnDisable()
     {
-        if (InputManager.Instance != null)
-        {
             InputManager.Instance.OnMove -= HandleMove;
             InputManager.Instance.OnInteract -= HandleInteract;
-        }
+    }
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
