@@ -1,6 +1,4 @@
-// ----------------------------
-// PlayerCamera.cs
-// ----------------------------
+
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
