@@ -8,10 +8,7 @@ public abstract class StepInteractable : MonoBehaviour, IInteractable
         {
             OnStepInteract();
         }
-        else
-        {
-            Debug.Log($"Cannot interact with {name}, not current step.");
-        }
+        
     }
 
     protected abstract void OnStepInteract();

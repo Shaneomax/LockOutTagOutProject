@@ -12,9 +12,6 @@ public class ButtonPress : StepInteractable
             onInteract.Invoke();
             StepManager.Instance.CompleteCurrentStep();
         }
-        else
-        {
-            Debug.Log($"Cannot interact with {name}, not current step.");
-        }
+        
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - Lock
   - GreenButton
   - Card
+  - ZoomArea
   layers:
   - Default
   - TransparentFX
