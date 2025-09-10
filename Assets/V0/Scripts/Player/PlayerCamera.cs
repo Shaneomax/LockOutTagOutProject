@@ -11,15 +11,13 @@ public class PlayerCamera : MonoBehaviour
 
     private float xRotation = 0f;
 
-    private void OnEnable()
+    private void Start()
     {
-        if (InputManager.Instance != null)
             InputManager.Instance.OnLook += HandleLook;
     }
 
     private void OnDisable()
     {
-        if (InputManager.Instance != null)
             InputManager.Instance.OnLook -= HandleLook;
     }
 

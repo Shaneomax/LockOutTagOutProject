@@ -9,6 +9,8 @@ TagManager:
   - YellowButton
   - Door
   - Lock
+  - GreenButton
+  - Card
   layers:
   - Default
   - TransparentFX

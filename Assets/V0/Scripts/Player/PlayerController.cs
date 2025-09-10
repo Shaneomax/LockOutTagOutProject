@@ -1,11 +1,14 @@
 
 using UnityEngine;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private Vector2 moveInput;
+    public Camera playerCamera;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -39,28 +42,27 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInteract()
     {
-        float interactDistance = 10f;
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        float interactDistance = 5f;
+        Ray ray = playerCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
 
         // Debug ray in Scene view
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red, 1f);
 
+        // inside HandleInteract() where you do the raycast hit:
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
         {
-            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            // more robust: look on the collider object or parents
+            IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {
                 interactable.Interact();
-                Debug.Log($"Interacted with {hit.collider.name}");
+                Debug.Log($"Interacted with {hit.collider.name} (component: {interactable.GetType().Name})");
             }
             else
             {
                 Debug.Log("Hit object is not interactable.");
             }
         }
-        else
-        {
-            Debug.Log("No object in range to interact.");
-        }
+
     }
 }
