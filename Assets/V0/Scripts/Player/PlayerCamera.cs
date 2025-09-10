@@ -13,12 +13,12 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-            InputManager.Instance.OnLook += HandleLook;
+        InputManager.Instance.OnLook += HandleLook;
     }
 
     private void OnDisable()
     {
-            InputManager.Instance.OnLook -= HandleLook;
+        InputManager.Instance.OnLook -= HandleLook;
     }
 
     private void HandleLook(Vector2 lookInput)

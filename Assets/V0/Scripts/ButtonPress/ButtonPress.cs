@@ -1,14 +1,20 @@
-
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ButtonPress : MonoBehaviour, IInteractable
+public class ButtonPress : StepInteractable
 {
-    [Header("Events")]
     public UnityEvent onInteract;
 
-    public void Interact()
+    protected override void OnStepInteract()
     {
-        onInteract.Invoke();
+        if (StepManager.Instance.IsCurrentStep(this))
+        {
+            onInteract.Invoke();
+            StepManager.Instance.CompleteCurrentStep();
+        }
+        else
+        {
+            Debug.Log($"Cannot interact with {name}, not current step.");
+        }
     }
 }

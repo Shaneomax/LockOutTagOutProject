@@ -1,46 +1,24 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class LockSystem : MonoBehaviour
 {
     public List<LockPiece> lockPieces = new List<LockPiece>();
     public float rotateSpeed = 180f;
-    private int currentStep = 0;
+
     private bool isRotating = false;
 
     private void Awake()
     {
         foreach (var piece in lockPieces)
-        {
             piece.system = this;
-        }
     }
+
     public void TryUnlock(LockPiece piece)
     {
-        if (isRotating)
-        {
-            Debug.Log("LockSystem: currently rotating. Wait.");
-            return;
-        }
-
-        if (currentStep >= lockPieces.Count)
-        {
-            Debug.Log("LockSystem: all locks solved.");
-            return;
-        }
-
-        if (lockPieces[currentStep] != piece)
-        {
-            Debug.Log($"LockSystem: Wrong lock clicked. Expected '{lockPieces[currentStep].name}', got '{piece.name}'.");
-            return;
-        }
-
-        if (piece.solved)
-        {
-            Debug.Log($"LockSystem: '{piece.name}' already solved.");
-            return;
-        }
+        if (isRotating) return;  
+        if (piece.solved) return;
 
         StartCoroutine(RotateAndActivate(piece));
     }
@@ -71,9 +49,6 @@ public class LockSystem : MonoBehaviour
             piece.cardObject.SetActive(true);
 
         piece.solved = true;
-        currentStep++;
         isRotating = false;
-
-        Debug.Log($"LockSystem: solved '{piece.name}' ({currentStep}/{lockPieces.Count}).");
     }
 }

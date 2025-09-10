@@ -1,14 +1,15 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
-public class SlidingDoor : MonoBehaviour, IInteractable
+public class SlidingDoor : StepInteractable
 {
-    public Transform[] doorParts;
+    public List<Transform> doorParts = new List<Transform>();
     public float moveSpeed = 2f;
 
-    private bool isOpening;
+    private bool isOpening = false;
 
-    public void Interact()
+    protected override void OnStepInteract()
     {
         if (!isOpening)
             StartCoroutine(DoorOpening());
@@ -16,23 +17,37 @@ public class SlidingDoor : MonoBehaviour, IInteractable
 
     private IEnumerator DoorOpening()
     {
-        for (int i = 1; i < doorParts.Length; i++)
-        {
-            bool done = true;
-            while (done)
-            {
-                done = false;
+        isOpening = true;
 
+        for (int i = 1; i < doorParts.Count; i++)
+        {
+            bool moving = true;
+            while (moving)
+            {
+                moving = false;
                 for (int j = 0; j < i; j++)
                 {
-                    Vector3 target = new Vector3(doorParts[i].position.x, doorParts[j].position.y, doorParts[i].position.z);
-                    doorParts[j].position = Vector3.MoveTowards(doorParts[j].position, target, moveSpeed * Time.deltaTime);
-                    if (doorParts[j].position != target)
-                        done = true;
-                }
+                    Vector3 target = new Vector3(
+                        doorParts[i].position.x,
+                        doorParts[j].position.y,
+                        doorParts[i].position.z
+                    );
 
+                    doorParts[j].position = Vector3.MoveTowards(
+                        doorParts[j].position,
+                        target,
+                        moveSpeed * Time.deltaTime
+                    );
+
+                    if ((doorParts[j].position - target).sqrMagnitude > 0.0001f)
+                        moving = true;
+                }
                 yield return null;
             }
         }
+
+        isOpening = false;
+
+        StepManager.Instance.CompleteCurrentStep();
     }
 }

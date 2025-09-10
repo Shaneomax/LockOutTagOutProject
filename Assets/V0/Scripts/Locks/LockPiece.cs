@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class LockPiece : MonoBehaviour, IInteractable
+public class LockPiece : StepInteractable
 {
     public LockSystem system;
-    public Vector3 targetLocalEuler = new Vector3(0, 90, 0);
+    public Vector3 targetLocalEuler = Vector3.zero;
     public GameObject cardObject;
 
     public bool solved = false;
 
-    public void Interact()
+    protected override void OnStepInteract()
     {
         system.TryUnlock(this);
+        StepManager.Instance.CompleteCurrentStep();
     }
 }

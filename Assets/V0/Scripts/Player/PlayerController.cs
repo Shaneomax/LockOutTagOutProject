@@ -48,10 +48,8 @@ public class PlayerController : MonoBehaviour
         // Debug ray in Scene view
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red, 1f);
 
-        // inside HandleInteract() where you do the raycast hit:
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
         {
-            // more robust: look on the collider object or parents
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {

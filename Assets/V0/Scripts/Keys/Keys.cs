@@ -1,19 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class Keys : MonoBehaviour,IInteractable
+public class Keys : StepInteractable
 {
-    [Header("Movement Settings")]
-    public Vector3 targetPosition; 
+    public Vector3 targetPosition;
     public float speed = 3f;
 
-
-    public void MoveAndHide()
+    protected override void OnStepInteract()
     {
-        StartCoroutine(MoveToTargetAndDeactivate());
+        StartCoroutine(MoveAndComplete());
     }
 
-    private IEnumerator MoveToTargetAndDeactivate()
+    private IEnumerator MoveAndComplete()
     {
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
@@ -22,11 +20,8 @@ public class Keys : MonoBehaviour,IInteractable
         }
 
         transform.position = targetPosition;
-        gameObject.SetActive(false); 
-    }
+        gameObject.SetActive(false);
 
-    public void Interact()
-    {
-        MoveAndHide();
+        StepManager.Instance.CompleteCurrentStep();
     }
 }
