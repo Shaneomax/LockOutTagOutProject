@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandleInteract()
     {
-        float interactDistance = 25f;
+        float interactDistance = 10f;
         Ray ray = playerCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red, 1f);

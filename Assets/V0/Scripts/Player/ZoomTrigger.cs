@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider))]
 public class ZoomTrigger : MonoBehaviour
@@ -17,6 +18,10 @@ public class ZoomTrigger : MonoBehaviour
     [Header("References")]
     public PlayerController playerController;
 
+    [Header("Step Tasks")]
+    public List<StepInteractable> stepTasks = new List<StepInteractable>();
+
+    private int tasksCompleted = 0;
     private bool isZoomed = false;
     public static ZoomTrigger ActiveZoomTrigger;
 
@@ -26,11 +31,17 @@ public class ZoomTrigger : MonoBehaviour
             playerCamera = Camera.main;
 
         defaultFOV = playerCamera.fieldOfView;
+
+        //// Auto-fill tasks if none assigned
+        //if (stepTasks.Count == 0)
+        //{
+        //    stepTasks.AddRange(GetComponentsInChildren<StepInteractable>());
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isZoomed)
+        if (!isZoomed && other.CompareTag("Player"))
         {
             RotateToTarget();
         }
@@ -38,27 +49,29 @@ public class ZoomTrigger : MonoBehaviour
 
     private void RotateToTarget()
     {
-        if (target == null)
-        {
-            ZoomIn();
-            return;
-        }
-
         playerController.canMove = false;
         InputManager.Instance.CanLook = false;
 
-        Vector3 lookDir = (target.position - playerController.transform.position).normalized;
-        lookDir.y = 0f;
-        Quaternion targetRot = Quaternion.LookRotation(lookDir);
+        if (target != null)
+        {
+            Vector3 direction = (target.position - playerController.transform.position).normalized;
+            direction.y = 0f;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        playerController.transform.DORotateQuaternion(targetRot, rotateDuration)
-            .OnComplete(() => ZoomIn());
+            playerController.transform.DORotateQuaternion(targetRotation, rotateDuration)
+                .OnComplete(ZoomIn);
+        }
+        else
+        {
+            ZoomIn();
+        }
     }
 
     private void ZoomIn()
     {
         isZoomed = true;
         ActiveZoomTrigger = this;
+        tasksCompleted = 0;
 
         playerCamera.DOFieldOfView(zoomFOV, zoomDuration).OnComplete(() =>
         {
@@ -67,7 +80,19 @@ public class ZoomTrigger : MonoBehaviour
         });
     }
 
-    public void ZoomOut()
+    public void RegisterTaskCompletion(StepInteractable task)
+    {
+        if (!isZoomed || !stepTasks.Contains(task)) return;
+
+        tasksCompleted++;
+
+        if (tasksCompleted >= stepTasks.Count)
+        {
+            ZoomOut();
+        }
+    }
+
+    private void ZoomOut()
     {
         if (!isZoomed) return;
 

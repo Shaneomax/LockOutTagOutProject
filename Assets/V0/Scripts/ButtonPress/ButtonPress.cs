@@ -9,7 +9,7 @@ public class ButtonPress : StepInteractable
     {
         if (StepManager.Instance.IsCurrentStep(this))
         {
-            onInteract.Invoke();
+            onInteract?.Invoke();
             StepManager.Instance.CompleteCurrentStep();
         }
         
