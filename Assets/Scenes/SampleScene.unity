@@ -199,7 +199,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd189a957c64974bb73f23ff4219513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StepManager
-  steps: []
+  steps:
+  - task: {fileID: 1796873264}
+  - task: {fileID: 8809158153820294901}
+  - task: {fileID: 6823876591890087931}
+  - task: {fileID: 346773010}
+  - task: {fileID: 6399323212844827486}
+  - task: {fileID: 9091868689900470931}
+  - task: {fileID: 7781777749995200925}
+  - task: {fileID: 8812335262666910676}
   currentStep: 0
 --- !u!1 &224700475
 GameObject:
@@ -1252,6 +1260,9 @@ MonoBehaviour:
   target: {fileID: 7781777749995200923}
   rotateDuration: 0.5
   playerController: {fileID: 269459197}
+  stepTasks:
+  - {fileID: 7781777749995200925}
+  - {fileID: 8812335262666910676}
 --- !u!65 &643394912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1620,6 +1631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752796419}
+  - component: {fileID: 752796420}
   m_Layer: 0
   m_Name: InteractionPoints
   m_TagString: Untagged
@@ -1647,6 +1659,24 @@ Transform:
   - {fileID: 643394910}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752796420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752796418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec9ce2e31bf42340821ffa8be7232da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoomTriggerManager
+  triggers:
+  - {fileID: 1749315430}
+  - {fileID: 1907959747}
+  - {fileID: 1389871736}
+  - {fileID: 1595143173}
+  - {fileID: 643394911}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,9 +1949,11 @@ MonoBehaviour:
   playerCamera: {fileID: 330585545}
   zoomFOV: 30
   zoomDuration: 0.5
-  target: {fileID: 7187476507839239687}
+  target: {fileID: 4582024652173292532}
   rotateDuration: 0.5
   playerController: {fileID: 269459197}
+  stepTasks:
+  - {fileID: 346773010}
 --- !u!65 &1389871737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2305,6 +2337,9 @@ MonoBehaviour:
   target: {fileID: 6399323212844827484}
   rotateDuration: 0.5
   playerController: {fileID: 269459197}
+  stepTasks:
+  - {fileID: 6399323212844827486}
+  - {fileID: 9091868689900470931}
 --- !u!65 &1595143174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2592,6 +2627,8 @@ MonoBehaviour:
   target: {fileID: 1796873262}
   rotateDuration: 0.5
   playerController: {fileID: 269459197}
+  stepTasks:
+  - {fileID: 1796873264}
 --- !u!1 &1796873257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2820,6 +2857,9 @@ MonoBehaviour:
   target: {fileID: 7187476507839239687}
   rotateDuration: 0.5
   playerController: {fileID: 269459197}
+  stepTasks:
+  - {fileID: 8809158153820294901}
+  - {fileID: 6823876591890087931}
 --- !u!65 &1907959748
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -25,23 +25,20 @@ public class ZoomTrigger : MonoBehaviour
     private bool isZoomed = false;
     public static ZoomTrigger ActiveZoomTrigger;
 
+    // Delegate for manager
+    public System.Action<ZoomTrigger> onZoomOutCompleted;
+
     private void Awake()
     {
         if (playerCamera == null)
             playerCamera = Camera.main;
 
         defaultFOV = playerCamera.fieldOfView;
-
-        //// Auto-fill tasks if none assigned
-        //if (stepTasks.Count == 0)
-        //{
-        //    stepTasks.AddRange(GetComponentsInChildren<StepInteractable>());
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isZoomed && other.CompareTag("Player"))
+        if (!isZoomed && other.CompareTag("Player") && gameObject.activeSelf)
         {
             RotateToTarget();
         }
@@ -106,6 +103,9 @@ public class ZoomTrigger : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            // Notify manager
+            onZoomOutCompleted?.Invoke(this);
         });
     }
 }
