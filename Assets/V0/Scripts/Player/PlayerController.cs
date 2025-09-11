@@ -1,6 +1,4 @@
-
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -12,25 +10,29 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
+    public bool canMove = true;
 
-    private void Start()
-    {
-            InputManager.Instance.OnMove += HandleMove;
-            InputManager.Instance.OnInteract += HandleInteract;
-    }
-
-    private void OnDisable()
-    {
-            InputManager.Instance.OnMove -= HandleMove;
-            InputManager.Instance.OnInteract -= HandleInteract;
-    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        InputManager.Instance.OnMove += HandleMove;
+        InputManager.Instance.OnInteract += HandleInteract;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.OnMove -= HandleMove;
+        InputManager.Instance.OnInteract -= HandleInteract;
+    }
+
     private void FixedUpdate()
     {
+        if (!canMove) return; 
+
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
     }
@@ -40,12 +42,11 @@ public class PlayerController : MonoBehaviour
         moveInput = input;
     }
 
-    private void HandleInteract()
+    public void HandleInteract()
     {
-        float interactDistance = 5f;
-        Ray ray = playerCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
+        float interactDistance = 25f;
+        Ray ray = playerCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        // Debug ray in Scene view
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
@@ -61,6 +62,5 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Hit object is not interactable.");
             }
         }
-
     }
 }

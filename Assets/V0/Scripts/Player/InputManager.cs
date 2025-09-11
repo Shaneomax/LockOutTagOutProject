@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 
@@ -9,6 +9,9 @@ public class InputManager : MonoBehaviour
     public event Action<Vector2> OnMove;
     public event Action<Vector2> OnLook;
     public event Action OnInteract;
+
+    // ✅ Add this flag
+    public bool CanLook { get; set; } = true;
 
     private void Awake()
     {
@@ -27,6 +30,8 @@ public class InputManager : MonoBehaviour
 
     public void Look(InputAction.CallbackContext context)
     {
+        if (!CanLook) return; 
+
         Vector2 look = context.ReadValue<Vector2>();
         OnLook?.Invoke(look);
     }

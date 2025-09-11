@@ -198,15 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StepManager
   steps:
-  - task: {fileID: 7655569662507174680}
-  - task: {fileID: 8809158153820294901}
-  - task: {fileID: 6823876591890087931}
   - task: {fileID: 346773010}
-  - task: {fileID: 6399323212844827486}
-  - task: {fileID: 9091868689900470931}
-  - task: {fileID: 7781777749995200925}
-  - task: {fileID: 8812335262666910676}
-  - task: {fileID: 5652956223017763106}
   currentStep: 0
 --- !u!1 &224700475
 GameObject:
@@ -534,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerCamera: {fileID: 330585545}
   moveSpeed: 5
+  canMove: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,10 +679,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   playerBody: {fileID: 269459194}
   mouseSensitivity: 30
-  cam: {fileID: 330585545}
-  zoomFOV: 30
-  normalFOV: 60
-  zoomSpeed: 5
 --- !u!1 &346773008
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +783,7 @@ Transform:
   m_GameObject: {fileID: 399454168}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.204, y: 2.294, z: 1.928}
+  m_LocalPosition: {x: 8.204, y: 2.32, z: 1.928}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1516,6 +1505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1183907304}
   - component: {fileID: 1183907303}
+  - component: {fileID: 1183907305}
   m_Layer: 0
   m_Name: ZoomArea
   m_TagString: ZoomArea
@@ -1538,12 +1528,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.8188839, z: 1}
+  m_Center: {x: 0, y: -0.09055799, z: 0}
 --- !u!4 &1183907304
 Transform:
   m_ObjectHideFlags: 0
@@ -1553,12 +1543,30 @@ Transform:
   m_GameObject: {fileID: 1183907302}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.22, y: 0.58, z: -1.07962}
+  m_LocalPosition: {x: -3.628, y: 0.58, z: 1.594}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1183907305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183907302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
+  playerCamera: {fileID: 330585545}
+  zoomFOV: 30
+  zoomDuration: 0.5
+  target: {fileID: 269459194}
+  rotateDuration: 0.5
+  playerController: {fileID: 269459197}
 --- !u!1 &1441154541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +2005,7 @@ Transform:
   m_GameObject: {fileID: 1749315425}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.77447, y: 0.32, z: -1.05}
+  m_LocalPosition: {x: -3.14, y: 0.32, z: 2.15}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -32249,8 +32257,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.033183366, y: 0.049824953, z: 0.04779768}
-  m_Center: {x: -0.0081747025, y: 0.00018060207, z: -0.0034415722}
+  m_Size: {x: 0.051368862, y: 0.14411736, z: 0.11615884}
+  m_Center: {x: -0.01726745, y: -0.0037263632, z: -0.002692759}
 --- !u!1 &7662597346866218674
 GameObject:
   m_ObjectHideFlags: 0
