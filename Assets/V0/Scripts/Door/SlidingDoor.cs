@@ -1,53 +1,66 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class SlidingDoor : StepInteractable
 {
     public List<Transform> doorParts = new List<Transform>();
-    public float moveSpeed = 2f;
+    public float moveSpeed = 1f; 
 
     private bool isOpening = false;
 
     protected override void OnStepInteract()
     {
         if (!isOpening)
-            StartCoroutine(DoorOpening());
+            OpenDoorSequence();
     }
 
-    private IEnumerator DoorOpening()
+    private void OpenDoorSequence()
     {
+        if (doorParts.Count < 2) return;
+
         isOpening = true;
+
+        Sequence seq = DOTween.Sequence();
 
         for (int i = 1; i < doorParts.Count; i++)
         {
-            bool moving = true;
-            while (moving)
+            int index = i;
+            seq.AppendCallback(() =>
             {
-                moving = false;
-                for (int j = 0; j < i; j++)
+                // Move all previous door parts to align with current part
+                Sequence innerSeq = DOTween.Sequence();
+                for (int j = 0; j < index; j++)
                 {
                     Vector3 target = new Vector3(
-                        doorParts[i].position.x,
+                        doorParts[index].position.x,
                         doorParts[j].position.y,
-                        doorParts[i].position.z
+                        doorParts[index].position.z
                     );
 
-                    doorParts[j].position = Vector3.MoveTowards(
-                        doorParts[j].position,
-                        target,
-                        moveSpeed * Time.deltaTime
-                    );
+                    float distance = Vector3.Distance(doorParts[j].position, target);
+                    float duration = distance / moveSpeed;
 
-                    if ((doorParts[j].position - target).sqrMagnitude > 0.0001f)
-                        moving = true;
+                    innerSeq.Join(doorParts[j].DOMove(target, duration));
                 }
-                yield return null;
-            }
+                innerSeq.Play();
+            });
+
+            // Wait until inner sequence finishes
+            float maxDistance = 0f;
+            for (int j = 0; j < i; j++)
+                maxDistance = Mathf.Max(maxDistance, Vector3.Distance(doorParts[j].position, doorParts[i].position));
+            float waitTime = maxDistance / moveSpeed;
+
+            seq.AppendInterval(waitTime);
         }
 
-        isOpening = false;
+        seq.OnComplete(() =>
+        {
+            isOpening = false;
+            StepManager.Instance.CompleteCurrentStep();
+        });
 
-        StepManager.Instance.CompleteCurrentStep();
+        seq.Play();
     }
 }

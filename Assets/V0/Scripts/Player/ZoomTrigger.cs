@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider))]
@@ -29,7 +30,6 @@ public class ZoomTrigger : MonoBehaviour
     private bool isZoomed = false;
     public static ZoomTrigger ActiveZoomTrigger;
 
-    // Delegate for manager
     public System.Action<ZoomTrigger> onZoomOutCompleted;
 
     private void Awake()
@@ -44,27 +44,22 @@ public class ZoomTrigger : MonoBehaviour
     {
         if (!isZoomed && other.CompareTag("Player") && gameObject.activeSelf)
         {
-            RotateToTarget();
-        }
-    }
+            playerController.canMove = false;
+            InputManager.Instance.CanLook = false;
 
-    private void RotateToTarget()
-    {
-        playerController.canMove = false;
-        InputManager.Instance.CanLook = false;
+            if (target != null)
+            {
+                Vector3 direction = (target.position - playerController.transform.position).normalized;
+                direction.y = 0f;
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        if (target != null)
-        {
-            Vector3 direction = (target.position - playerController.transform.position).normalized;
-            direction.y = 0f;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-            playerController.transform.DORotateQuaternion(targetRotation, rotateDuration)
-                .OnComplete(ZoomIn);
-        }
-        else
-        {
-            ZoomIn();
+                playerController.transform.DORotateQuaternion(targetRotation, rotateDuration)
+                    .OnComplete(ZoomIn);
+            }
+            else
+            {
+                ZoomIn();
+            }
         }
     }
 
@@ -78,10 +73,15 @@ public class ZoomTrigger : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-
-            // Play after-trigger audios here, after zoom in
-            PlayAudioList(afterTriggerAudios);
+            AudioManager.Instance.PlayAudioListAtPoint(afterTriggerAudios, transform.position);
         });
+    }
+
+    public void PlayBeforeAudios()
+    {
+        AudioManager.Instance.PlayAudioSequentially(
+            FindObjectOfType<AudioSource>(), beforeTriggerAudios
+        );
     }
 
     public void RegisterTaskCompletion(StepInteractable task)
@@ -92,54 +92,19 @@ public class ZoomTrigger : MonoBehaviour
 
         if (tasksCompleted >= stepTasks.Count)
         {
-            ZoomOut();
-        }
-    }
+            playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
+            {
+                isZoomed = false;
+                ActiveZoomTrigger = null;
 
-    private void ZoomOut()
-    {
-        if (!isZoomed) return;
+                playerController.canMove = true;
+                InputManager.Instance.CanLook = true;
 
-        playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
-        {
-            isZoomed = false;
-            ActiveZoomTrigger = null;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
-            playerController.canMove = true;
-            InputManager.Instance.CanLook = true;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            // No need to play afterTriggerAudios here anymore
-            onZoomOutCompleted?.Invoke(this);
-        });
-    }
-
-    public void PlayBeforeAudios(AudioSource source)
-    {
-        if (beforeTriggerAudios.Count > 0 && source != null)
-        {
-            StartCoroutine(PlayAudioSequentially(source, beforeTriggerAudios));
-        }
-    }
-
-    private void PlayAudioList(List<AudioClip> clips)
-    {
-        foreach (var clip in clips)
-        {
-            if (clip != null)
-                AudioSource.PlayClipAtPoint(clip, transform.position);
-        }
-    }
-
-    private System.Collections.IEnumerator PlayAudioSequentially(AudioSource source, List<AudioClip> clips)
-    {
-        foreach (var clip in clips)
-        {
-            source.clip = clip;
-            source.Play();
-            yield return new WaitForSeconds(clip.length);
+                onZoomOutCompleted?.Invoke(this);
+            });
         }
     }
 }

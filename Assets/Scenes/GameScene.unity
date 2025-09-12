@@ -274,7 +274,10 @@ MonoBehaviour:
   playerController: {fileID: 269459197}
   stepTasks:
   - {fileID: 263996272}
-  triggerAudio: {fileID: 8300000, guid: d63a871f1dc8d2643882b8e7f1c44bbc, type: 3}
+  beforeTriggerAudios:
+  - {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
+  afterTriggerAudios:
+  - {fileID: 8300000, guid: d63a871f1dc8d2643882b8e7f1c44bbc, type: 3}
 --- !u!65 &196993696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -885,7 +888,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -982,7 +985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0915f27a40c22e49b426cf064e3b7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  audioSource: {fileID: 0}
 --- !u!4 &307633258
 Transform:
   m_ObjectHideFlags: 0
@@ -1256,7 +1258,7 @@ Transform:
   m_GameObject: {fileID: 342903925}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.056610122, z: -0, w: 0.9983964}
-  m_LocalPosition: {x: 0.040000383, y: 1.53, z: 2.640002}
+  m_LocalPosition: {x: -0.02, y: 1.53, z: 2.12}
   m_LocalScale: {x: 1.2499996, y: 0.375, z: 0.3749999}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1277,7 +1279,8 @@ MonoBehaviour:
   player: {fileID: 269459194}
   arrow: {fileID: 342903930}
   triggerManager: {fileID: 752796420}
-  arrowHeight: 2
+  arrowHeight: 1.25
+  forwardOffset: 1
 --- !u!1 &346773008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +1681,10 @@ MonoBehaviour:
   stepTasks:
   - {fileID: 7781777749995200925}
   - {fileID: 8812335262666910676}
-  triggerAudio: {fileID: 8300000, guid: 72e14015751416a42a4c6b28f96e6aeb, type: 3}
+  beforeTriggerAudios:
+  - {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
+  afterTriggerAudios:
+  - {fileID: 8300000, guid: 72e14015751416a42a4c6b28f96e6aeb, type: 3}
 --- !u!65 &643394912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2095,7 +2101,6 @@ MonoBehaviour:
   - {fileID: 196993695}
   - {fileID: 1595143173}
   - {fileID: 643394911}
-  audioSource: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,7 +2378,10 @@ MonoBehaviour:
   playerController: {fileID: 269459197}
   stepTasks:
   - {fileID: 346773010}
-  triggerAudio: {fileID: 8300000, guid: e09f7f163c6c3e040820eef2bd9e75c5, type: 3}
+  beforeTriggerAudios:
+  - {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
+  afterTriggerAudios:
+  - {fileID: 8300000, guid: e09f7f163c6c3e040820eef2bd9e75c5, type: 3}
 --- !u!65 &1389871737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2760,7 +2768,10 @@ MonoBehaviour:
   stepTasks:
   - {fileID: 6399323212844827486}
   - {fileID: 9091868689900470931}
-  triggerAudio: {fileID: 8300000, guid: 9d974e11a0952494a9bf0839cea8edfe, type: 3}
+  beforeTriggerAudios:
+  - {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
+  afterTriggerAudios:
+  - {fileID: 8300000, guid: 9d974e11a0952494a9bf0839cea8edfe, type: 3}
 --- !u!65 &1595143174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3050,7 +3061,11 @@ MonoBehaviour:
   playerController: {fileID: 269459197}
   stepTasks:
   - {fileID: 1796873264}
-  triggerAudio: {fileID: 8300000, guid: 31668a6c0d29b7541ad90e7b8b07f559, type: 3}
+  beforeTriggerAudios:
+  - {fileID: 8300000, guid: c1b4e0544d7e54b4daaca36763d07bc0, type: 3}
+  - {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
+  afterTriggerAudios:
+  - {fileID: 8300000, guid: 31668a6c0d29b7541ad90e7b8b07f559, type: 3}
 --- !u!1 &1796873257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3282,7 +3297,10 @@ MonoBehaviour:
   stepTasks:
   - {fileID: 8809158153820294901}
   - {fileID: 6823876591890087931}
-  triggerAudio: {fileID: 8300000, guid: a2a5c2d5f7b85914098a791f822df048, type: 3}
+  beforeTriggerAudios:
+  - {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
+  afterTriggerAudios:
+  - {fileID: 8300000, guid: a2a5c2d5f7b85914098a791f822df048, type: 3}
 --- !u!65 &1907959748
 BoxCollider:
   m_ObjectHideFlags: 0

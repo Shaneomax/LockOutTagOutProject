@@ -3,18 +3,20 @@ using UnityEngine;
 public class ArrowController : MonoBehaviour
 {
     [Header("References")]
-    public Transform player;                  
-    public Transform arrow;                 
-    public ZoomTriggerManager triggerManager; 
+    public Transform player;
+    public Transform arrow;
+    public ZoomTriggerManager triggerManager;
 
     [Header("Settings")]
-    public float arrowHeight = 2f; 
+    public float arrowHeight = 2f;
+    public float forwardOffset = 1f;
 
     private void Update()
     {
         if (player == null || arrow == null || triggerManager == null) return;
 
-        arrow.position = player.position + Vector3.up * arrowHeight;
+        // Position arrow above player
+        arrow.position = player.position + Vector3.up * arrowHeight + player.forward * forwardOffset;
 
         ZoomTrigger targetTrigger = triggerManager.GetCurrentTrigger();
 
@@ -23,8 +25,7 @@ public class ArrowController : MonoBehaviour
             if (!arrow.gameObject.activeSelf)
                 arrow.gameObject.SetActive(true);
 
-            Vector3 targetPos = targetTrigger.transform.position;
-            Vector3 direction = (targetPos - arrow.position).normalized;
+            Vector3 direction = (targetTrigger.transform.position - arrow.position).normalized;
             direction.y = 0f;
 
             if (direction != Vector3.zero)
@@ -32,8 +33,7 @@ public class ArrowController : MonoBehaviour
         }
         else
         {
-            if (arrow.gameObject.activeSelf)
-                arrow.gameObject.SetActive(false);
+            arrow.gameObject.SetActive(false);
         }
     }
 }

@@ -1,28 +1,43 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    [Header("Audio Source")]
-    public AudioSource audioSource;
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
-        if (audioSource == null)
-            audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void PlayAudio(AudioClip clip)
+    public void PlayAudioSequentially(AudioSource source, List<AudioClip> clips)
     {
-        if (clip != null && audioSource != null)
+        if (source != null && clips != null && clips.Count > 0)
+            StartCoroutine(PlaySequence(source, clips));
+    }
+
+    private IEnumerator PlaySequence(AudioSource source, List<AudioClip> clips)
+    {
+        foreach (var clip in clips)
         {
-            audioSource.Stop();
-            audioSource.clip = clip;
-            audioSource.Play();
+            if (clip == null) continue;
+
+            source.clip = clip;
+            source.Play();
+            yield return new WaitForSeconds(clip.length);
+        }
+    }
+
+    public void PlayAudioListAtPoint(List<AudioClip> clips, Vector3 position)
+    {
+        if (clips == null) return;
+
+        foreach (var clip in clips)
+        {
+            if (clip != null)
+                AudioSource.PlayClipAtPoint(clip, position);
         }
     }
 }
