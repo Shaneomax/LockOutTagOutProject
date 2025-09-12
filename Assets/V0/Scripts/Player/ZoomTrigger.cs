@@ -49,12 +49,23 @@ public class ZoomTrigger : MonoBehaviour
 
             if (target != null)
             {
-                Vector3 direction = (target.position - playerController.transform.position).normalized;
+                Vector3 direction = target.position - playerController.transform.position;
                 direction.y = 0f;
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-                playerController.transform.DORotateQuaternion(targetRotation, rotateDuration)
-                    .OnComplete(ZoomIn);
+                if (direction.sqrMagnitude > 0.001f)
+                {
+                    float targetY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                    Vector3 currentRotation = playerController.transform.eulerAngles;
+                    Vector3 endRotation = new Vector3(currentRotation.x, targetY, currentRotation.z);
+
+                    playerController.transform.DORotate(endRotation, rotateDuration, RotateMode.Fast)
+                        .SetEase(Ease.OutSine)
+                        .OnComplete(ZoomIn);
+                }
+                else
+                {
+                    ZoomIn();
+                }
             }
             else
             {
@@ -62,6 +73,8 @@ public class ZoomTrigger : MonoBehaviour
             }
         }
     }
+
+
 
     private void ZoomIn()
     {
