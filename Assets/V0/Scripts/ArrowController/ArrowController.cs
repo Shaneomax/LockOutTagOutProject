@@ -15,7 +15,6 @@ public class ArrowController : MonoBehaviour
     {
         if (player == null || arrow == null || triggerManager == null) return;
 
-        // Position arrow above player
         arrow.position = player.position + Vector3.up * arrowHeight + player.forward * forwardOffset;
 
         ZoomTrigger targetTrigger = triggerManager.GetCurrentTrigger();
