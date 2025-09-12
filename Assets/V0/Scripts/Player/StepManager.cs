@@ -7,8 +7,6 @@ public class Step
     [Tooltip("The exact component that represents this step task")]
     public StepInteractable task;
 
-    [Tooltip("Audio that will play before this step starts")]
-    public AudioClip stepAudio;
 }
 
 
