@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class ZoomTriggerManager : MonoBehaviour
@@ -9,7 +9,6 @@ public class ZoomTriggerManager : MonoBehaviour
 
     private void Start()
     {
-        // Deactivate all triggers except the first one
         for (int i = 0; i < triggers.Count; i++)
         {
             triggers[i].gameObject.SetActive(i == 0);
@@ -17,17 +16,20 @@ public class ZoomTriggerManager : MonoBehaviour
         }
     }
 
-    // Called by a trigger when its zoom-out finishes
     private void OnTriggerZoomOutCompleted(ZoomTrigger completedTrigger)
     {
-        // Deactivate the completed trigger
         completedTrigger.gameObject.SetActive(false);
 
-        // Move to next trigger
         currentIndex++;
         if (currentIndex < triggers.Count)
         {
             triggers[currentIndex].gameObject.SetActive(true);
         }
+    }
+ public ZoomTrigger GetCurrentTrigger()
+    {
+        if (currentIndex < triggers.Count)
+            return triggers[currentIndex];
+        return null;
     }
 }
