@@ -21,6 +21,10 @@ public class ZoomTrigger : MonoBehaviour
     [Header("Step Tasks")]
     public List<StepInteractable> stepTasks = new List<StepInteractable>();
 
+    [Header("Audio Settings")]
+    public List<AudioClip> beforeTriggerAudios = new List<AudioClip>();
+    public List<AudioClip> afterTriggerAudios = new List<AudioClip>();
+
     private int tasksCompleted = 0;
     private bool isZoomed = false;
     public static ZoomTrigger ActiveZoomTrigger;
@@ -74,6 +78,9 @@ public class ZoomTrigger : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            // Play after-trigger audios here, after zoom in
+            PlayAudioList(afterTriggerAudios);
         });
     }
 
@@ -104,8 +111,35 @@ public class ZoomTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            // Notify manager
+            // No need to play afterTriggerAudios here anymore
             onZoomOutCompleted?.Invoke(this);
         });
+    }
+
+    public void PlayBeforeAudios(AudioSource source)
+    {
+        if (beforeTriggerAudios.Count > 0 && source != null)
+        {
+            StartCoroutine(PlayAudioSequentially(source, beforeTriggerAudios));
+        }
+    }
+
+    private void PlayAudioList(List<AudioClip> clips)
+    {
+        foreach (var clip in clips)
+        {
+            if (clip != null)
+                AudioSource.PlayClipAtPoint(clip, transform.position);
+        }
+    }
+
+    private System.Collections.IEnumerator PlayAudioSequentially(AudioSource source, List<AudioClip> clips)
+    {
+        foreach (var clip in clips)
+        {
+            source.clip = clip;
+            source.Play();
+            yield return new WaitForSeconds(clip.length);
+        }
     }
 }

@@ -7,6 +7,9 @@ public class ZoomTriggerManager : MonoBehaviour
     public List<ZoomTrigger> triggers = new List<ZoomTrigger>();
     private int currentIndex = 0;
 
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
+
     private void Start()
     {
         for (int i = 0; i < triggers.Count; i++)
@@ -14,6 +17,9 @@ public class ZoomTriggerManager : MonoBehaviour
             triggers[i].gameObject.SetActive(i == 0);
             triggers[i].onZoomOutCompleted = OnTriggerZoomOutCompleted;
         }
+
+        if (triggers.Count > 0)
+            triggers[currentIndex].PlayBeforeAudios(audioSource);
     }
 
     private void OnTriggerZoomOutCompleted(ZoomTrigger completedTrigger)
@@ -24,9 +30,11 @@ public class ZoomTriggerManager : MonoBehaviour
         if (currentIndex < triggers.Count)
         {
             triggers[currentIndex].gameObject.SetActive(true);
+            triggers[currentIndex].PlayBeforeAudios(audioSource);
         }
     }
- public ZoomTrigger GetCurrentTrigger()
+
+    public ZoomTrigger GetCurrentTrigger()
     {
         if (currentIndex < triggers.Count)
             return triggers[currentIndex];
