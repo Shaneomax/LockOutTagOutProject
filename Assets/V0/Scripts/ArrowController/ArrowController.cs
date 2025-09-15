@@ -30,9 +30,6 @@ public class ArrowController : MonoBehaviour
             if (direction != Vector3.zero)
                 arrow.rotation = Quaternion.LookRotation(direction);
         }
-        else
-        {
-            arrow.gameObject.SetActive(false);
-        }
+        
     }
 }

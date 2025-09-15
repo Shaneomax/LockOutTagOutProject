@@ -22,8 +22,6 @@ public class AudioManager : MonoBehaviour
     {
         foreach (var clip in clips)
         {
-            if (clip == null) continue;
-
             source.clip = clip;
             source.Play();
             yield return new WaitForSeconds(clip.length);

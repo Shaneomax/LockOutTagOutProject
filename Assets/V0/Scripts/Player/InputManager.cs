@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     public event Action<Vector2> OnLook;
     public event Action OnInteract;
 
-    public bool CanLook { get; set; } = true;
+    public bool CanLook  = true;
 
     private void Awake()
     {

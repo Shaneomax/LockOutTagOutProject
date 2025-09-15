@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening; 
 
 public class LockSystem : MonoBehaviour
 {
@@ -17,13 +17,13 @@ public class LockSystem : MonoBehaviour
 
     public void TryUnlock(LockPiece piece)
     {
-        if (isRotating) return;  
+        if (isRotating) return;
         if (piece.solved) return;
 
-        StartCoroutine(RotateAndActivate(piece));
+        RotateAndActivate(piece);
     }
 
-    private IEnumerator RotateAndActivate(LockPiece piece)
+    private void RotateAndActivate(LockPiece piece)
     {
         isRotating = true;
 
@@ -33,22 +33,18 @@ public class LockSystem : MonoBehaviour
 
         float angle = Quaternion.Angle(start, end);
         float duration = Mathf.Max(0.0001f, angle / rotateSpeed);
-        float elapsed = 0f;
 
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float frac = Mathf.Clamp01(elapsed / duration);
-            t.localRotation = Quaternion.Slerp(start, end, frac);
-            yield return null;
-        }
+        t.DOKill();
 
-        t.localRotation = end;
+        t.DOLocalRotate(piece.targetLocalEuler, duration, RotateMode.Fast)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                if (piece.cardObject != null)
+                    piece.cardObject.SetActive(true);
 
-        if (piece.cardObject != null)
-            piece.cardObject.SetActive(true);
-
-        piece.solved = true;
-        isRotating = false;
+                piece.solved = true;
+                isRotating = false;
+            });
     }
 }

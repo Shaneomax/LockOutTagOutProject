@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider))]
@@ -49,23 +48,7 @@ public class ZoomTrigger : MonoBehaviour
 
             if (target != null)
             {
-                Vector3 direction = target.position - playerController.transform.position;
-                direction.y = 0f;
-
-                if (direction.sqrMagnitude > 0.001f)
-                {
-                    float targetY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-                    Vector3 currentRotation = playerController.transform.eulerAngles;
-                    Vector3 endRotation = new Vector3(currentRotation.x, targetY, currentRotation.z);
-
-                    playerController.transform.DORotate(endRotation, rotateDuration, RotateMode.Fast)
-                        .SetEase(Ease.OutSine)
-                        .OnComplete(ZoomIn);
-                }
-                else
-                {
-                    ZoomIn();
-                }
+                RotatePlayerToTarget();
             }
             else
             {
@@ -74,7 +57,24 @@ public class ZoomTrigger : MonoBehaviour
         }
     }
 
+    private void RotatePlayerToTarget()
+    {
 
+        Vector3 dirToTarget = target.position - playerController.transform.position;
+        dirToTarget.y = 0f;
+        if (dirToTarget.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetYaw = Quaternion.LookRotation(dirToTarget);
+            playerController.transform.DORotateQuaternion(targetYaw, rotateDuration);
+        }
+
+        Vector3 cameraDir = target.position - playerController.playerCamera.transform.position;
+        float pitch = -Mathf.Asin(cameraDir.normalized.y) * Mathf.Rad2Deg;
+
+        Quaternion camTarget = Quaternion.Euler(pitch, 0f, 0f);
+        playerController.playerCamera.transform.DOLocalRotateQuaternion(camTarget, rotateDuration)
+            .OnComplete(ZoomIn);
+    }
 
     private void ZoomIn()
     {

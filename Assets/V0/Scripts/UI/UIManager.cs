@@ -56,13 +56,8 @@ public class UIManager : MonoBehaviour
 
     public void OnFinalSubmit()
     {
-        if (string.IsNullOrEmpty(selectedMode))
-        {
-            return;
-        }
+        selectedMode = "GameScene";
 
-        PlayerPrefs.SetString("GameMode", selectedMode);
-
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(selectedMode);
     }
 }
