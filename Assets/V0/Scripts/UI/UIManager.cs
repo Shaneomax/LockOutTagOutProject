@@ -1,24 +1,42 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     [Header("Panels")]
-    public GameObject formPanel;     
-    public GameObject choicePanel;   
+    public GameObject formPanel;
+    public GameObject choicePanel;
 
     [Header("Input Fields")]
     public TMP_InputField nameInput;
     public TMP_InputField companyInput;
     public TMP_InputField emailInput;
 
-    private string selectedMode = "";  
+    [Header("Mode Selection")]
+    public Toggle trainingToggle;
+    public Toggle qualificationToggle;
+
+    private string selectedMode = "";
 
     private void Start()
     {
         formPanel.SetActive(true);
         choicePanel.SetActive(false);
+
+        trainingToggle.isOn = false;
+        qualificationToggle.isOn = false;
+
+        trainingToggle.onValueChanged.AddListener((isOn) =>
+        {
+            if (isOn) selectedMode = "Training";
+        });
+
+        qualificationToggle.onValueChanged.AddListener((isOn) =>
+        {
+            if (isOn) selectedMode = "Qualification";
+        });
     }
 
     public void OnFormSubmit()
@@ -41,23 +59,15 @@ public class UIManager : MonoBehaviour
         formPanel.SetActive(true);
     }
 
- 
-    public void OnTraining()
-    {
-        selectedMode = "Training";
-        Debug.Log("Training selected");
-    }
-
-    public void OnQualification()
-    {
-        selectedMode = "Qualification";
-        Debug.Log("Qualification selected");
-    }
-
     public void OnFinalSubmit()
     {
-        selectedMode = "GameScene";
+        if (string.IsNullOrEmpty(selectedMode))
+        {
+            selectedMode = "Training";
+        }
 
-        SceneManager.LoadScene(selectedMode);
+        Debug.Log(selectedMode + " selected, loading scene...");
+
+        SceneManager.LoadScene("GameScene");
     }
 }
