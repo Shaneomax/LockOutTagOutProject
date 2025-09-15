@@ -21,9 +21,14 @@ public class ZoomTrigger : MonoBehaviour
     [Header("Step Tasks")]
     public List<StepInteractable> stepTasks = new List<StepInteractable>();
 
-    [Header("Audio Settings")]
-    public List<AudioClip> beforeTriggerAudios = new List<AudioClip>();
-    public List<AudioClip> afterTriggerAudios = new List<AudioClip>();
+    //[Header("Audio Settings")]
+    //public List<AudioClip> beforeTriggerAudios = new List<AudioClip>();
+    //public List<AudioClip> afterTriggerAudios = new List<AudioClip>();
+
+    [Header("Audio + Subtitle Settings")]
+    public List<SubtitleData> beforeTriggerSubtitleData = new List<SubtitleData>();
+    public List<SubtitleData> afterTriggerSubtitleData = new List<SubtitleData>();
+
 
     private int tasksCompleted = 0;
     private bool isZoomed = false;
@@ -86,15 +91,24 @@ public class ZoomTrigger : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            AudioManager.Instance.PlayAudioListAtPoint(afterTriggerAudios, transform.position);
+            //AudioManager.Instance.PlayAudioListAtPoint(afterTriggerAudios, transform.position);
+            TextManager.Instance.PlayWithSubtitles(
+                FindObjectOfType<AudioSource>(), afterTriggerSubtitleData
+            );
+
         });
     }
 
     public void PlayBeforeAudios()
     {
-        AudioManager.Instance.PlayAudioSequentially(
-            FindObjectOfType<AudioSource>(), beforeTriggerAudios
+        //AudioManager.Instance.PlayAudioSequentially(
+        //    FindObjectOfType<AudioSource>(), beforeTriggerAudios
+        //);
+
+        TextManager.Instance.PlayWithSubtitles(
+            FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData
         );
+
     }
 
     public void RegisterTaskCompletion(StepInteractable task)
