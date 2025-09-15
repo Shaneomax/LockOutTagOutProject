@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 
 [RequireComponent(typeof(Collider))]
 public class ZoomTrigger : MonoBehaviour
 {
     [Header("Zoom Settings")]
     public Camera playerCamera;
-    public float zoomFOV = 30f;
-    public float zoomDuration = 0.5f;
+    public float zoomFOV = 30f, zoomDuration = 0.5f;
     private float defaultFOV;
 
     [Header("Rotation Settings")]
@@ -21,63 +21,58 @@ public class ZoomTrigger : MonoBehaviour
     [Header("Step Tasks")]
     public List<StepInteractable> stepTasks = new List<StepInteractable>();
 
-    //[Header("Audio Settings")]
-    //public List<AudioClip> beforeTriggerAudios = new List<AudioClip>();
-    //public List<AudioClip> afterTriggerAudios = new List<AudioClip>();
+    [Header("Step Popups")]
+    public List<string> stepPopupTexts = new List<string>();
+    public TextMeshProUGUI popupTextMeshPro;
+    public Vector3 popupOffset = new Vector3(50f, 50f, 0f);
 
     [Header("Audio + Subtitle Settings")]
     public List<SubtitleData> beforeTriggerSubtitleData = new List<SubtitleData>();
     public List<SubtitleData> afterTriggerSubtitleData = new List<SubtitleData>();
 
-
-    private int tasksCompleted = 0;
-    private bool isZoomed = false;
+    private int tasksCompleted;
+    private bool isZoomed;
+    private Canvas canvas;
     public static ZoomTrigger ActiveZoomTrigger;
-
     public System.Action<ZoomTrigger> onZoomOutCompleted;
 
     private void Awake()
     {
         if (playerCamera == null)
+        {
             playerCamera = Camera.main;
+        }
 
         defaultFOV = playerCamera.fieldOfView;
+
+        if (popupTextMeshPro)
+        {
+            popupTextMeshPro.gameObject.SetActive(false);
+            canvas = popupTextMeshPro.GetComponentInParent<Canvas>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isZoomed && other.CompareTag("Player") && gameObject.activeSelf)
-        {
-            playerController.canMove = false;
-            InputManager.Instance.CanLook = false;
+        if (isZoomed || !other.CompareTag("Player") || !gameObject.activeSelf) return;
 
-            if (target != null)
-            {
-                RotatePlayerToTarget();
-            }
-            else
-            {
-                ZoomIn();
-            }
-        }
+        playerController.canMove = false;
+        InputManager.Instance.CanLook = false;
+
+        if (target) RotatePlayerToTarget();
+        else ZoomIn();
     }
 
     private void RotatePlayerToTarget()
     {
+        Vector3 dir = target.position - playerController.transform.position;
+        dir.y = 0f;
+        if (dir.sqrMagnitude > 0.001f)
+            playerController.transform.DORotateQuaternion(Quaternion.LookRotation(dir), rotateDuration);
 
-        Vector3 dirToTarget = target.position - playerController.transform.position;
-        dirToTarget.y = 0f;
-        if (dirToTarget.sqrMagnitude > 0.001f)
-        {
-            Quaternion targetYaw = Quaternion.LookRotation(dirToTarget);
-            playerController.transform.DORotateQuaternion(targetYaw, rotateDuration);
-        }
-
-        Vector3 cameraDir = target.position - playerController.playerCamera.transform.position;
-        float pitch = -Mathf.Asin(cameraDir.normalized.y) * Mathf.Rad2Deg;
-
-        Quaternion camTarget = Quaternion.Euler(pitch, 0f, 0f);
-        playerController.playerCamera.transform.DOLocalRotateQuaternion(camTarget, rotateDuration)
+        Vector3 camDir = target.position - playerController.playerCamera.transform.position;
+        float pitch = -Mathf.Asin(camDir.normalized.y) * Mathf.Rad2Deg;
+        playerController.playerCamera.transform.DOLocalRotateQuaternion(Quaternion.Euler(pitch, 0, 0), rotateDuration)
             .OnComplete(ZoomIn);
     }
 
@@ -91,33 +86,53 @@ public class ZoomTrigger : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            //AudioManager.Instance.PlayAudioListAtPoint(afterTriggerAudios, transform.position);
-            TextManager.Instance.PlayWithSubtitles(
-                FindObjectOfType<AudioSource>(), afterTriggerSubtitleData
-            );
 
+            TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), afterTriggerSubtitleData);
+            ShowStepPopup();
         });
     }
 
-    public void PlayBeforeAudios()
+    private void ShowStepPopup()
     {
-        //AudioManager.Instance.PlayAudioSequentially(
-        //    FindObjectOfType<AudioSource>(), beforeTriggerAudios
-        //);
+        if (!popupTextMeshPro || tasksCompleted >= stepTasks.Count) return;
 
-        TextManager.Instance.PlayWithSubtitles(
-            FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData
-        );
+        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count ? stepPopupTexts[tasksCompleted] : "";
 
+        Transform currentTarget = stepTasks[tasksCompleted].transform;
+        Vector3 screenPos = playerCamera.WorldToScreenPoint(currentTarget.position);
+
+        if (canvas)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvas.transform as RectTransform,
+                screenPos + popupOffset,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : playerCamera,
+                out Vector2 localPoint
+            );
+            popupTextMeshPro.rectTransform.localPosition = localPoint;
+        }
+
+        popupTextMeshPro.gameObject.SetActive(true);
     }
+
+    private void HideStepPopup()
+    {
+        if (popupTextMeshPro != null)
+        {
+            popupTextMeshPro.gameObject.SetActive(false);
+        }
+    }
+
 
     public void RegisterTaskCompletion(StepInteractable task)
     {
         if (!isZoomed || !stepTasks.Contains(task)) return;
 
+        HideStepPopup();
         tasksCompleted++;
 
-        if (tasksCompleted >= stepTasks.Count)
+        if (tasksCompleted < stepTasks.Count) ShowStepPopup();
+        else
         {
             playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
             {
@@ -134,4 +149,7 @@ public class ZoomTrigger : MonoBehaviour
             });
         }
     }
+
+    public void PlayBeforeAudios() =>
+        TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData);
 }
