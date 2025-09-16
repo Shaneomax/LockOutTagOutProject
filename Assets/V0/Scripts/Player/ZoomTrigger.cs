@@ -30,6 +30,17 @@ public class ZoomTrigger : MonoBehaviour
     public List<SubtitleData> beforeTriggerSubtitleData = new List<SubtitleData>();
     public List<SubtitleData> afterTriggerSubtitleData = new List<SubtitleData>();
 
+    [Header("Outline Layer Settings")]
+    public LayerMask outlineLayerMask;
+    public LayerMask fallbackLayerMask; 
+    public bool restoreOriginalOnDisable = false;
+    public bool setChildren = true;
+
+    private int outlineLayerIndex = -1;
+    private int fallbackLayerIndex = 0;
+
+    private Dictionary<Transform, int> originalLayerMap = new Dictionary<Transform, int>();
+
     private int tasksCompleted;
     private bool isZoomed;
     private Canvas canvas;
@@ -39,9 +50,7 @@ public class ZoomTrigger : MonoBehaviour
     private void Awake()
     {
         if (playerCamera == null)
-        {
             playerCamera = Camera.main;
-        }
 
         defaultFOV = playerCamera.fieldOfView;
 
@@ -50,6 +59,13 @@ public class ZoomTrigger : MonoBehaviour
             popupTextMeshPro.gameObject.SetActive(false);
             canvas = popupTextMeshPro.GetComponentInParent<Canvas>();
         }
+
+        outlineLayerIndex = GetFirstLayerIndex(outlineLayerMask);
+        fallbackLayerIndex = GetFirstLayerIndex(fallbackLayerMask);
+        if (fallbackLayerIndex < 0) fallbackLayerIndex = 0;
+
+        CacheOriginalLayers();
+        EnsureOutlineOffAtStart();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -87,22 +103,21 @@ public class ZoomTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            TextManager.Instance.PlayWithSubtitles(
-                FindObjectOfType<AudioSource>(),
-                afterTriggerSubtitleData
-            );
+            TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), afterTriggerSubtitleData);
+
+            if (outlineLayerIndex >= 0)
+                EnableOutlineForCurrentTask(); 
 
             ShowStepPopup();
         });
     }
 
+
     private void ShowStepPopup()
     {
         if (!popupTextMeshPro || tasksCompleted >= stepTasks.Count) return;
 
-        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count
-            ? stepPopupTexts[tasksCompleted]
-            : "";
+        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count ? stepPopupTexts[tasksCompleted] : "";
 
         Transform currentTarget = stepTasks[tasksCompleted].transform;
         Vector3 screenPos = playerCamera.WorldToScreenPoint(currentTarget.position);
@@ -124,9 +139,7 @@ public class ZoomTrigger : MonoBehaviour
     private void HideStepPopup()
     {
         if (popupTextMeshPro != null)
-        {
             popupTextMeshPro.gameObject.SetActive(false);
-        }
     }
 
     public void RegisterTaskCompletion(StepInteractable task)
@@ -134,14 +147,20 @@ public class ZoomTrigger : MonoBehaviour
         if (!isZoomed || !stepTasks.Contains(task)) return;
 
         HideStepPopup();
+
+        DisableOutlineForTask(task);
+
         tasksCompleted++;
 
         if (tasksCompleted < stepTasks.Count)
         {
+            EnableOutlineForCurrentTask(); 
             ShowStepPopup();
         }
         else
         {
+            DisableAllOutlineLayers();
+
             playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
             {
                 isZoomed = false;
@@ -158,6 +177,102 @@ public class ZoomTrigger : MonoBehaviour
         }
     }
 
+
     public void PlayBeforeAudios() =>
         TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData);
+
+
+    private int GetFirstLayerIndex(LayerMask mask)
+    {
+        int m = mask.value;
+        if (m == 0) return -1;
+        for (int i = 0; i < 32; i++)
+            if ((m & (1 << i)) != 0) return i;
+        return -1;
+    }
+
+    private void CacheOriginalLayers()
+    {
+        originalLayerMap.Clear();
+        if (stepTasks == null) return;
+
+        foreach (var t in stepTasks)
+        {
+            if (t == null) continue;
+            var transforms = t.GetComponentsInChildren<Transform>(true);
+            foreach (var tr in transforms)
+            {
+                if (!originalLayerMap.ContainsKey(tr))
+                    originalLayerMap[tr] = tr.gameObject.layer;
+            }
+        }
+    }
+
+    private void EnsureOutlineOffAtStart()
+    {
+        foreach (var t in stepTasks)
+        {
+            if (t == null) continue;
+            if (setChildren) SetLayerRecursively(t.gameObject, fallbackLayerIndex);
+            else t.gameObject.layer = fallbackLayerIndex;
+        }
+    }
+
+    // Enable only the current step task
+    private void EnableOutlineForCurrentTask()
+    {
+        if (tasksCompleted < stepTasks.Count)
+        {
+            StepInteractable task = stepTasks[tasksCompleted];
+            if (task != null)
+            {
+                if (setChildren) SetLayerRecursively(task.gameObject, outlineLayerIndex);
+                else task.gameObject.layer = outlineLayerIndex;
+            }
+        }
+    }
+
+    private void DisableOutlineForTask(StepInteractable task)
+    {
+        if (task == null) return;
+
+        if (restoreOriginalOnDisable)
+            RestoreOriginalLayersForTask(task);
+        else
+        {
+            if (setChildren) SetLayerRecursively(task.gameObject, fallbackLayerIndex);
+            else task.gameObject.layer = fallbackLayerIndex;
+        }
+    }
+
+    private void DisableAllOutlineLayers()
+    {
+        foreach (var t in stepTasks)
+        {
+            if (t == null) continue;
+            if (restoreOriginalOnDisable) RestoreOriginalLayersForTask(t);
+            else
+            {
+                if (setChildren) SetLayerRecursively(t.gameObject, fallbackLayerIndex);
+                else t.gameObject.layer = fallbackLayerIndex;
+            }
+        }
+    }
+
+    private void RestoreOriginalLayersForTask(StepInteractable task)
+    {
+        var transforms = task.GetComponentsInChildren<Transform>(true);
+        foreach (var tr in transforms)
+        {
+            if (originalLayerMap.TryGetValue(tr, out int original))
+                tr.gameObject.layer = original;
+        }
+    }
+
+    private void SetLayerRecursively(GameObject go, int layer)
+    {
+        var transforms = go.GetComponentsInChildren<Transform>(true);
+        foreach (var tr in transforms)
+            tr.gameObject.layer = layer;
+    }
 }
