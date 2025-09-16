@@ -380,14 +380,8 @@ MonoBehaviour:
   - Press Start Button
   popupTextMeshPro: {fileID: 1692048476}
   popupOffset: {x: 1.5, y: 1, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: d63a871f1dc8d2643882b8e7f1c44bbc, type: 3}
-    subtitle: "Now you need to verify that the line can't be allowed to restart by
-      first pressing the blue reset button on the front and then pressing the Start
-      button. Confirm that the red lights remain off.\t"
+  beforeTriggerSubtitleData: []
+  afterTriggerSubtitleData: []
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -396,6 +390,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 0}
 --- !u!65 &196993696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1385,17 +1380,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358184333}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 852061424}
+  m_Father: {fileID: 1213666107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 175}
-  m_SizeDelta: {x: 1800, y: 100}
+  m_AnchoredPosition: {x: 0, y: 60}
+  m_SizeDelta: {x: 1290, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &358184335
 MonoBehaviour:
@@ -1426,8 +1421,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279900910
-  m_fontColor: {r: 0.9339623, g: 0.101326115, b: 0.101326115, a: 1}
+    rgba: 4293980403
+  m_fontColor: {r: 0.9528302, g: 0.93934673, b: 0.93934673, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1444,8 +1439,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1482,7 +1477,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 18, z: 0, w: 9}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2004,13 +1999,8 @@ MonoBehaviour:
   - Press P2
   popupTextMeshPro: {fileID: 1692048476}
   popupOffset: {x: 1.5, y: 1, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 72e14015751416a42a4c6b28f96e6aeb, type: 3}
-    subtitle: "Turn off the Electrical Disconnect E2 and the Pneumatic Disconnect
-      P2 and place two locks off your belt on each of the Energy Isolation devices.\t"
+  beforeTriggerSubtitleData: []
+  afterTriggerSubtitleData: []
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -2019,6 +2009,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 0}
 --- !u!65 &643394912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2771,8 +2762,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 358184334}
   - {fileID: 1692048475}
+  - {fileID: 1213666107}
   m_Father: {fileID: 917845586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3096,10 +3087,7 @@ MonoBehaviour:
   popupTextMeshPro: {fileID: 0}
   popupOffset: {x: 1.5, y: 1, z: 0}
   beforeTriggerSubtitleData: []
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 11cf051889c7015479bda58a3cc81421, type: 3}
-    subtitle: "Congratulations! You have now completed DAK Interact - Rollstand Lockout
-      Tagout Training. \t"
+  afterTriggerSubtitleData: []
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -3108,6 +3096,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 0}
 --- !u!65 &1106319188
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3226,6 +3215,82 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.008203779, y: 0.020953663, z: 0.008203779}
   m_Center: {x: 4.656613e-10, y: -9.313226e-10, z: 9.313226e-10}
+--- !u!1 &1213666106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1213666107}
+  - component: {fileID: 1213666109}
+  - component: {fileID: 1213666108}
+  m_Layer: 5
+  m_Name: SubtitleImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1213666107
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213666106}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 358184334}
+  m_Father: {fileID: 852061424}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -365}
+  m_SizeDelta: {x: 1290, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1213666108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213666106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9056604, g: 0.49982202, b: 0.49982202, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1213666109
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213666106}
+  m_CullTransparentMesh: 1
 --- !u!1 &1268110016
 GameObject:
   m_ObjectHideFlags: 0
@@ -3530,12 +3595,8 @@ MonoBehaviour:
   - Open The Door
   popupTextMeshPro: {fileID: 1692048476}
   popupOffset: {x: 1.5, y: 1, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: e09f7f163c6c3e040820eef2bd9e75c5, type: 3}
-    subtitle: Now the gate can be opened.
+  beforeTriggerSubtitleData: []
+  afterTriggerSubtitleData: []
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -3544,6 +3605,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 0}
 --- !u!65 &1389871737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3896,7 +3958,7 @@ Transform:
   m_GameObject: {fileID: 1496578157}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.12, z: 0}
+  m_LocalPosition: {x: 0, y: -0.05, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4094,13 +4156,8 @@ MonoBehaviour:
   - Press P1
   popupTextMeshPro: {fileID: 1692048476}
   popupOffset: {x: 1.5, y: 1, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 9d974e11a0952494a9bf0839cea8edfe, type: 3}
-    subtitle: "Turn off the Electrical Disconnect E1 and the Pneumatic Disconnect
-      P1 and place two locks off your belt on each of the Energy Isolation devices.\t"
+  beforeTriggerSubtitleData: []
+  afterTriggerSubtitleData: []
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -4109,6 +4166,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 0}
 --- !u!65 &1595143174
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4864,15 +4922,15 @@ MonoBehaviour:
   popupOffset: {x: 150, y: -10, z: 0}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: c1b4e0544d7e54b4daaca36763d07bc0, type: 3}
-    subtitle: "Welcome to DAK's Machine Safety Lockout Tagout Training, In this example
+    subtitle: Welcome to DAK's Machine Safety Lockout Tagout Training, In this example
       we will learn how to lockout and verify that energy is properly isolated on
-      this unwinder machine.\t"
+      this unwinder machine.
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
+    subtitle: Follow the trail to go next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 31668a6c0d29b7541ad90e7b8b07f559, type: 3}
-    subtitle: "The first step to locking out the machine is to stop the line. Press
-      the red button located on the bottom of the pushbutton box.\t"
+    subtitle: The first step to locking out the machine is to stop the line. Press
+      the red button located on the bottom of the pushbutton box.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -4881,6 +4939,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 1213666106}
 --- !u!1 &1775609005 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7451868596486118685, guid: e80f283031579524ab5489370f461a32, type: 3}
@@ -5048,10 +5107,10 @@ MonoBehaviour:
   popupOffset: {x: 1.5, y: 1, z: 0}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
+    subtitle: Follow the trail to go next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: a2a5c2d5f7b85914098a791f822df048, type: 3}
-    subtitle: Please lockOut the rollstand.
+    subtitle: 
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -5060,6 +5119,7 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
+  subtitleImage: {fileID: 1213666106}
 --- !u!65 &1907959748
 BoxCollider:
   m_ObjectHideFlags: 0

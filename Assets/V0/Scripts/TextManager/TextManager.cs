@@ -8,8 +8,8 @@ public class TextManager : MonoBehaviour
     public static TextManager Instance;
 
     [Header("UI Reference")]
-    public TextMeshProUGUI subtitleText;   
-    public CanvasGroup subtitleGroup;     
+    public TextMeshProUGUI subtitleText;
+    public CanvasGroup subtitleGroup;
 
     private void Awake()
     {
@@ -17,13 +17,15 @@ public class TextManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    // Original method that can still be called
     public void PlayWithSubtitles(AudioSource source, List<SubtitleData> dataList)
     {
         if (source != null && dataList != null && dataList.Count > 0)
-            StartCoroutine(PlaySubtitlesSequence(source, dataList));
+            StartCoroutine(PlayWithSubtitlesCoroutine(source, dataList)); // fixed
     }
 
-    private IEnumerator PlaySubtitlesSequence(AudioSource source, List<SubtitleData> dataList)
+    // Coroutine version that can be used to wait for completion
+    public IEnumerator PlayWithSubtitlesCoroutine(AudioSource source, List<SubtitleData> dataList)
     {
         foreach (var data in dataList)
         {

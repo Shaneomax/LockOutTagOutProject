@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
@@ -8,7 +9,8 @@ public class ZoomTrigger : MonoBehaviour
 {
     [Header("Zoom Settings")]
     public Camera playerCamera;
-    public float zoomFOV = 30f, zoomDuration = 0.5f;
+    public float zoomFOV = 30f;
+    public float zoomDuration = 0.5f;
     private float defaultFOV;
 
     [Header("Rotation Settings")]
@@ -32,18 +34,21 @@ public class ZoomTrigger : MonoBehaviour
 
     [Header("Outline Layer Settings")]
     public LayerMask outlineLayerMask;
-    public LayerMask fallbackLayerMask; 
+    public LayerMask fallbackLayerMask;
     public bool restoreOriginalOnDisable = false;
     public bool setChildren = true;
 
+    [Header("Subtitle Image")]
+    public GameObject subtitleImage;
+
     private int outlineLayerIndex = -1;
     private int fallbackLayerIndex = 0;
-
     private Dictionary<Transform, int> originalLayerMap = new Dictionary<Transform, int>();
 
     private int tasksCompleted;
     private bool isZoomed;
     private Canvas canvas;
+
     public static ZoomTrigger ActiveZoomTrigger;
     public System.Action<ZoomTrigger> onZoomOutCompleted;
 
@@ -70,13 +75,16 @@ public class ZoomTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isZoomed || !other.CompareTag("Player") || !gameObject.activeSelf) return;
+        if (isZoomed || !other.CompareTag("Player") || !gameObject.activeSelf)
+            return;
 
         playerController.canMove = false;
         InputManager.Instance.CanLook = false;
 
-        if (target) RotatePlayerToTarget();
-        else ZoomIn();
+        if (target)
+            RotatePlayerToTarget();
+        else
+            ZoomIn();
     }
 
     private void RotatePlayerToTarget()
@@ -88,7 +96,8 @@ public class ZoomTrigger : MonoBehaviour
 
         Vector3 camDir = target.position - playerController.playerCamera.transform.position;
         float pitch = -Mathf.Asin(camDir.normalized.y) * Mathf.Rad2Deg;
-        playerController.playerCamera.transform.DOLocalRotateQuaternion(Quaternion.Euler(pitch, 0, 0), rotateDuration)
+        playerController.playerCamera.transform
+            .DOLocalRotateQuaternion(Quaternion.Euler(pitch, 0, 0), rotateDuration)
             .OnComplete(ZoomIn);
     }
 
@@ -103,21 +112,23 @@ public class ZoomTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), afterTriggerSubtitleData);
+            PlaySubtitlesWithImage(FindObjectOfType<AudioSource>(), afterTriggerSubtitleData);
 
             if (outlineLayerIndex >= 0)
-                EnableOutlineForCurrentTask(); 
+                EnableOutlineForCurrentTask();
 
             ShowStepPopup();
         });
     }
 
-
     private void ShowStepPopup()
     {
-        if (!popupTextMeshPro || tasksCompleted >= stepTasks.Count) return;
+        if (!popupTextMeshPro || tasksCompleted >= stepTasks.Count)
+            return;
 
-        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count ? stepPopupTexts[tasksCompleted] : "";
+        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count
+            ? stepPopupTexts[tasksCompleted]
+            : "";
 
         Transform currentTarget = stepTasks[tasksCompleted].transform;
         Vector3 screenPos = playerCamera.WorldToScreenPoint(currentTarget.position);
@@ -144,17 +155,17 @@ public class ZoomTrigger : MonoBehaviour
 
     public void RegisterTaskCompletion(StepInteractable task)
     {
-        if (!isZoomed || !stepTasks.Contains(task)) return;
+        if (!isZoomed || !stepTasks.Contains(task))
+            return;
 
         HideStepPopup();
-
         DisableOutlineForTask(task);
 
         tasksCompleted++;
 
         if (tasksCompleted < stepTasks.Count)
         {
-            EnableOutlineForCurrentTask(); 
+            EnableOutlineForCurrentTask();
             ShowStepPopup();
         }
         else
@@ -177,17 +188,33 @@ public class ZoomTrigger : MonoBehaviour
         }
     }
 
-
     public void PlayBeforeAudios() =>
-        TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData);
+        PlaySubtitlesWithImage(FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData);
 
+    private void PlaySubtitlesWithImage(AudioSource source, List<SubtitleData> subtitles)
+    {
+        if (subtitleImage != null)
+            subtitleImage.SetActive(true);
+
+        StartCoroutine(PlaySubtitlesCoroutine(source, subtitles));
+    }
+
+    private IEnumerator PlaySubtitlesCoroutine(AudioSource source, List<SubtitleData> subtitles)
+    {
+        yield return TextManager.Instance.PlayWithSubtitlesCoroutine(source, subtitles);
+
+        if (subtitleImage != null)
+            subtitleImage.SetActive(false);
+    }
 
     private int GetFirstLayerIndex(LayerMask mask)
     {
         int m = mask.value;
         if (m == 0) return -1;
+
         for (int i = 0; i < 32; i++)
             if ((m & (1 << i)) != 0) return i;
+
         return -1;
     }
 
@@ -199,12 +226,11 @@ public class ZoomTrigger : MonoBehaviour
         foreach (var t in stepTasks)
         {
             if (t == null) continue;
+
             var transforms = t.GetComponentsInChildren<Transform>(true);
             foreach (var tr in transforms)
-            {
                 if (!originalLayerMap.ContainsKey(tr))
                     originalLayerMap[tr] = tr.gameObject.layer;
-            }
         }
     }
 
@@ -213,23 +239,24 @@ public class ZoomTrigger : MonoBehaviour
         foreach (var t in stepTasks)
         {
             if (t == null) continue;
-            if (setChildren) SetLayerRecursively(t.gameObject, fallbackLayerIndex);
-            else t.gameObject.layer = fallbackLayerIndex;
+            if (setChildren)
+                SetLayerRecursively(t.gameObject, fallbackLayerIndex);
+            else
+                t.gameObject.layer = fallbackLayerIndex;
         }
     }
 
-    // Enable only the current step task
     private void EnableOutlineForCurrentTask()
     {
-        if (tasksCompleted < stepTasks.Count)
-        {
-            StepInteractable task = stepTasks[tasksCompleted];
-            if (task != null)
-            {
-                if (setChildren) SetLayerRecursively(task.gameObject, outlineLayerIndex);
-                else task.gameObject.layer = outlineLayerIndex;
-            }
-        }
+        if (tasksCompleted >= stepTasks.Count) return;
+
+        StepInteractable task = stepTasks[tasksCompleted];
+        if (task == null) return;
+
+        if (setChildren)
+            SetLayerRecursively(task.gameObject, outlineLayerIndex);
+        else
+            task.gameObject.layer = outlineLayerIndex;
     }
 
     private void DisableOutlineForTask(StepInteractable task)
@@ -240,8 +267,10 @@ public class ZoomTrigger : MonoBehaviour
             RestoreOriginalLayersForTask(task);
         else
         {
-            if (setChildren) SetLayerRecursively(task.gameObject, fallbackLayerIndex);
-            else task.gameObject.layer = fallbackLayerIndex;
+            if (setChildren)
+                SetLayerRecursively(task.gameObject, fallbackLayerIndex);
+            else
+                task.gameObject.layer = fallbackLayerIndex;
         }
     }
 
@@ -250,11 +279,15 @@ public class ZoomTrigger : MonoBehaviour
         foreach (var t in stepTasks)
         {
             if (t == null) continue;
-            if (restoreOriginalOnDisable) RestoreOriginalLayersForTask(t);
+
+            if (restoreOriginalOnDisable)
+                RestoreOriginalLayersForTask(t);
             else
             {
-                if (setChildren) SetLayerRecursively(t.gameObject, fallbackLayerIndex);
-                else t.gameObject.layer = fallbackLayerIndex;
+                if (setChildren)
+                    SetLayerRecursively(t.gameObject, fallbackLayerIndex);
+                else
+                    t.gameObject.layer = fallbackLayerIndex;
             }
         }
     }
@@ -263,10 +296,8 @@ public class ZoomTrigger : MonoBehaviour
     {
         var transforms = task.GetComponentsInChildren<Transform>(true);
         foreach (var tr in transforms)
-        {
             if (originalLayerMap.TryGetValue(tr, out int original))
                 tr.gameObject.layer = original;
-        }
     }
 
     private void SetLayerRecursively(GameObject go, int layer)
