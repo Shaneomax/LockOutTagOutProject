@@ -30,6 +30,10 @@ public class ZoomTrigger : MonoBehaviour
     public List<SubtitleData> beforeTriggerSubtitleData = new List<SubtitleData>();
     public List<SubtitleData> afterTriggerSubtitleData = new List<SubtitleData>();
 
+    [Header("Prompt Settings")]
+    public List<GameObject> interactPrompts = new List<GameObject>();
+
+
     private int tasksCompleted;
     private bool isZoomed;
     private Canvas canvas;
@@ -87,16 +91,29 @@ public class ZoomTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), afterTriggerSubtitleData);
+            TextManager.Instance.PlayWithSubtitles(
+                FindObjectOfType<AudioSource>(),
+                afterTriggerSubtitleData
+            );
+
             ShowStepPopup();
+
+            if (interactPrompts != null && interactPrompts.Count > 0)
+            {
+                for (int i = 0; i < interactPrompts.Count; i++)
+                    interactPrompts[i].SetActive(i == 0);
+            }
         });
     }
+
 
     private void ShowStepPopup()
     {
         if (!popupTextMeshPro || tasksCompleted >= stepTasks.Count) return;
 
-        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count ? stepPopupTexts[tasksCompleted] : "";
+        popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count
+            ? stepPopupTexts[tasksCompleted]
+            : "";
 
         Transform currentTarget = stepTasks[tasksCompleted].transform;
         Vector3 screenPos = playerCamera.WorldToScreenPoint(currentTarget.position);
@@ -113,7 +130,11 @@ public class ZoomTrigger : MonoBehaviour
         }
 
         popupTextMeshPro.gameObject.SetActive(true);
+
+        for (int i = 0; i < interactPrompts.Count; i++)
+            interactPrompts[i].SetActive(i == tasksCompleted);
     }
+
 
     private void HideStepPopup()
     {
@@ -123,17 +144,26 @@ public class ZoomTrigger : MonoBehaviour
         }
     }
 
-
     public void RegisterTaskCompletion(StepInteractable task)
     {
         if (!isZoomed || !stepTasks.Contains(task)) return;
 
         HideStepPopup();
+
+        if (tasksCompleted < interactPrompts.Count)
+            interactPrompts[tasksCompleted].SetActive(false);
+
         tasksCompleted++;
 
-        if (tasksCompleted < stepTasks.Count) ShowStepPopup();
+        if (tasksCompleted < stepTasks.Count)
+        {
+            ShowStepPopup();
+        }
         else
         {
+            foreach (var prompt in interactPrompts)
+                prompt.SetActive(false);
+
             playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
             {
                 isZoomed = false;
@@ -149,6 +179,7 @@ public class ZoomTrigger : MonoBehaviour
             });
         }
     }
+
 
     public void PlayBeforeAudios() =>
         TextManager.Instance.PlayWithSubtitles(FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData);
