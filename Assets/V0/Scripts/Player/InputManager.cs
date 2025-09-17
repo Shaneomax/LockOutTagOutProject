@@ -9,8 +9,9 @@ public class InputManager : MonoBehaviour
     public event Action<Vector2> OnMove;
     public event Action<Vector2> OnLook;
     public event Action OnInteract;
+    public event Action OnPause;   
 
-    public bool CanLook  = true;
+    public bool CanLook = true;
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class InputManager : MonoBehaviour
 
     public void Look(InputAction.CallbackContext context)
     {
-        if (!CanLook) return; 
+        if (!CanLook) return;
 
         Vector2 look = context.ReadValue<Vector2>();
         OnLook?.Invoke(look);
@@ -39,5 +40,11 @@ public class InputManager : MonoBehaviour
     {
         if (context.performed)
             OnInteract?.Invoke();
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnPause?.Invoke();
     }
 }
