@@ -25,7 +25,7 @@ public class ZoomTrigger : MonoBehaviour
 
     [Header("Step Popups")]
     public List<string> stepPopupTexts = new List<string>();
-    public GameObject popupObject; // Parent with Image + TMP
+    public GameObject popupObject; 
     private TextMeshProUGUI popupTextMeshPro;
     public Vector3 popupOffset = new Vector3(50f, 50f, 0f);
 
@@ -174,21 +174,29 @@ public class ZoomTrigger : MonoBehaviour
         {
             DisableAllOutlineLayers();
 
-            playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
-            {
-                isZoomed = false;
-                ActiveZoomTrigger = null;
-
-                playerController.canMove = true;
-                InputManager.Instance.CanLook = true;
-
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-                onZoomOutCompleted?.Invoke(this);
-            });
+            StartCoroutine(DelayedZoomOut());
         }
     }
+
+    private IEnumerator DelayedZoomOut()
+    {
+        yield return new WaitForSeconds(0.7f); 
+
+        playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
+        {
+            isZoomed = false;
+            ActiveZoomTrigger = null;
+
+            playerController.canMove = true;
+            InputManager.Instance.CanLook = true;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            onZoomOutCompleted?.Invoke(this);
+        });
+    }
+
 
     public void PlayBeforeAudios() =>
         PlaySubtitlesWithImage(FindObjectOfType<AudioSource>(), beforeTriggerSubtitleData);

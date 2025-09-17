@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -11,6 +12,10 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public bool canMove = true;
+
+    [Header("Interaction Settings")]
+    public float interactCooldown = 0.2f;
+    private bool canInteract = true;
 
     private void Awake()
     {
@@ -31,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMove) return; 
+        if (!canMove) return;
 
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         rb.MovePosition(rb.position + move * moveSpeed * Time.fixedDeltaTime);
@@ -44,6 +49,15 @@ public class PlayerController : MonoBehaviour
 
     public void HandleInteract()
     {
+        if (!canInteract) return; 
+
+        StartCoroutine(InteractWithCooldown());
+    }
+
+    private IEnumerator InteractWithCooldown()
+    {
+        canInteract = false;
+
         float interactDistance = 10f;
         Ray ray = playerCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -62,5 +76,8 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Hit object is not interactable.");
             }
         }
+
+        yield return new WaitForSeconds(interactCooldown); 
+        canInteract = true;
     }
 }

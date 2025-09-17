@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     public Toggle trainingToggle;
     public Toggle qualificationToggle;
 
+    [Header("Warning")]
+    public TextMeshProUGUI warningText; // Optional UI text to show warnings
+
     private string selectedMode = "";
 
     private void Start()
@@ -28,14 +31,27 @@ public class UIManager : MonoBehaviour
         trainingToggle.isOn = false;
         qualificationToggle.isOn = false;
 
+        if (warningText != null)
+            warningText.gameObject.SetActive(false);
+
         trainingToggle.onValueChanged.AddListener((isOn) =>
         {
-            if (isOn) selectedMode = "Training";
+            if (isOn)
+            {
+                selectedMode = "Training";
+                if (warningText != null)
+                    warningText.gameObject.SetActive(false);
+            }
         });
 
         qualificationToggle.onValueChanged.AddListener((isOn) =>
         {
-            if (isOn) selectedMode = "Qualification";
+            if (isOn)
+            {
+                selectedMode = "Qualification";
+                if (warningText != null)
+                    warningText.gameObject.SetActive(false);
+            }
         });
     }
 
@@ -63,11 +79,16 @@ public class UIManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(selectedMode))
         {
-            selectedMode = "Training";
+            if (warningText != null)
+            {
+                warningText.text = "Please select Training or Qualification!";
+                warningText.gameObject.SetActive(true);
+            }
+            Debug.LogWarning("Please select Training or Qualification before proceeding!");
+            return; // Stop until player selects a mode
         }
 
         Debug.Log(selectedMode + " selected, loading scene...");
-
         SceneManager.LoadScene("GameScene");
     }
 }
