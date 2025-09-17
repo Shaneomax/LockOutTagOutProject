@@ -25,7 +25,8 @@ public class ZoomTrigger : MonoBehaviour
 
     [Header("Step Popups")]
     public List<string> stepPopupTexts = new List<string>();
-    public TextMeshProUGUI popupTextMeshPro;
+    public GameObject popupObject; // Parent with Image + TMP
+    private TextMeshProUGUI popupTextMeshPro;
     public Vector3 popupOffset = new Vector3(50f, 50f, 0f);
 
     [Header("Audio + Subtitle Settings")]
@@ -59,10 +60,11 @@ public class ZoomTrigger : MonoBehaviour
 
         defaultFOV = playerCamera.fieldOfView;
 
-        if (popupTextMeshPro)
+        if (popupObject)
         {
-            popupTextMeshPro.gameObject.SetActive(false);
-            canvas = popupTextMeshPro.GetComponentInParent<Canvas>();
+            popupTextMeshPro = popupObject.GetComponentInChildren<TextMeshProUGUI>();
+            popupObject.SetActive(false);
+            canvas = popupObject.GetComponentInParent<Canvas>();
         }
 
         outlineLayerIndex = GetFirstLayerIndex(outlineLayerMask);
@@ -123,7 +125,7 @@ public class ZoomTrigger : MonoBehaviour
 
     private void ShowStepPopup()
     {
-        if (!popupTextMeshPro || tasksCompleted >= stepTasks.Count)
+        if (!popupObject || !popupTextMeshPro || tasksCompleted >= stepTasks.Count)
             return;
 
         popupTextMeshPro.text = tasksCompleted < stepPopupTexts.Count
@@ -141,16 +143,16 @@ public class ZoomTrigger : MonoBehaviour
                 canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : playerCamera,
                 out Vector2 localPoint
             );
-            popupTextMeshPro.rectTransform.localPosition = localPoint;
+            popupObject.GetComponent<RectTransform>().localPosition = localPoint;
         }
 
-        popupTextMeshPro.gameObject.SetActive(true);
+        popupObject.SetActive(true);
     }
 
     private void HideStepPopup()
     {
-        if (popupTextMeshPro != null)
-            popupTextMeshPro.gameObject.SetActive(false);
+        if (popupObject != null)
+            popupObject.SetActive(false);
     }
 
     public void RegisterTaskCompletion(StepInteractable task)
