@@ -180,7 +180,7 @@ public class ZoomTrigger : MonoBehaviour
 
     private IEnumerator DelayedZoomOut()
     {
-        yield return new WaitForSeconds(0.7f); 
+        yield return new WaitForSeconds(0.9f); 
 
         playerCamera.DOFieldOfView(defaultFOV, zoomDuration).OnComplete(() =>
         {

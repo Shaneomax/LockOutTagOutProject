@@ -6,7 +6,7 @@ public class PlayerCamera : MonoBehaviour
     public Transform playerBody;
 
     [Header("Look Settings")]
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity = 30f;
 
     private float xRotation = 0f;
 
