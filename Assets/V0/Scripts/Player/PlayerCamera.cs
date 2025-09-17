@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -14,6 +14,11 @@ public class PlayerCamera : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        Vector3 lookTarget = transform.position + Vector3.right;
+        transform.LookAt(lookTarget);
+        if (playerBody != null)
+            playerBody.LookAt(new Vector3(lookTarget.x, playerBody.position.y, lookTarget.z));
 
         InputManager.Instance.OnLook += HandleLook;
     }

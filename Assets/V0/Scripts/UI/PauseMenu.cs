@@ -14,6 +14,9 @@ public class PauseMenu : MonoBehaviour
             pausePanel.SetActive(false);
 
         InputManager.Instance.OnPause += TogglePause;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnDestroy()
@@ -37,6 +40,10 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 0f;
         isPaused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         Debug.Log("Game Paused - Panel Active");
     }
 
@@ -47,6 +54,10 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1f;
         isPaused = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         Debug.Log("Game Resumed - Panel Hidden");
     }
 
@@ -59,7 +70,7 @@ public class PauseMenu : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu"); 
     }
 
     public void QuitGame()
