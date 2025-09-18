@@ -6,15 +6,14 @@ public abstract class StepInteractable : MonoBehaviour, IInteractable
     {
         if (StepManager.Instance != null)
         {
-            if (StepManager.Instance.IsCurrentStep(this))
-            {
+          
                 OnStepInteract();
 
                 if (ZoomTrigger.ActiveZoomTrigger != null)
                 {
                     ZoomTrigger.ActiveZoomTrigger.RegisterTaskCompletion(this);
                 }
-            }
+           
         }
         else
         {

@@ -225,16 +225,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StepManager
   steps:
-  - task: {fileID: 7655569662507174680}
-  - task: {fileID: 8809158153820294901}
-  - task: {fileID: 6823876591890087931}
-  - task: {fileID: 1268110017}
-  - task: {fileID: 6399323212844827486}
-  - task: {fileID: 9091868689900470931}
-  - task: {fileID: 7781777749995200925}
-  - task: {fileID: 8812335262666910676}
-  - task: {fileID: 6793626559227101020}
-  - task: {fileID: 5652956223017763106}
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 307633257}
+          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+          m_MethodName: LoadAudioClip
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: c1b4e0544d7e54b4daaca36763d07bc0, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
+  - Interactables: []
+    OnstepTrigger:
+      m_PersistentCalls:
+        m_Calls: []
   currentStep: 0
 --- !u!1 &130283321 stripped
 GameObject:
@@ -1105,6 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0915f27a40c22e49b426cf064e3b7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  AudioSource: {fileID: 307633256}
 --- !u!4 &307633258
 Transform:
   m_ObjectHideFlags: 0
@@ -3277,26 +3320,9 @@ MonoBehaviour:
   zoomCam: {fileID: 472114362}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 6793626559227101020}
   - {fileID: 5652956223017763106}
-  stepPopupTexts:
-  - Press Restart button
-  - Press Start button
-  popupObject: {fileID: 1497532029}
-  popupTargets:
-  - {fileID: 4110279371860367426}
-  - {fileID: 4681035381516450972}
-  popupOffset: {x: 0, y: 0, z: -0.15}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: d63a871f1dc8d2643882b8e7f1c44bbc, type: 3}
-    subtitle: Now you need to verify that the line can't be allowed to restart by
-      first pressing the blue reset button on the front and then pressing the Start
-      button. Confirm that the red lights remain off.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -4066,17 +4092,7 @@ MonoBehaviour:
   zoomCam: {fileID: 274143615}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks: []
-  stepPopupTexts: []
-  popupObject: {fileID: 0}
-  popupTargets: []
-  popupOffset: {x: 1.5, y: 1, z: 0}
-  beforeTriggerSubtitleData: []
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 11cf051889c7015479bda58a3cc81421, type: 3}
-    subtitle: 'Congratulations! You have now completed DAK Interact - Rollstand Lockout
-      Tagout Training. '
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4861,25 +4877,9 @@ MonoBehaviour:
   zoomCam: {fileID: 1047731790}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 6399323212844827486}
   - {fileID: 9091868689900470931}
-  stepPopupTexts:
-  - Press E1
-  - Press P1
-  popupObject: {fileID: 1497532029}
-  popupTargets:
-  - {fileID: 6399323212844827484}
-  - {fileID: 8075160947501164692}
-  popupOffset: {x: 0, y: 0.05, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 9d974e11a0952494a9bf0839cea8edfe, type: 3}
-    subtitle: Turn off the Electrical Disconnect E1 and the Pneumatic Disconnect
-      P1 and place two locks off your belt on each of the Energy Isolation devices.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -5723,24 +5723,9 @@ MonoBehaviour:
   zoomCam: {fileID: 1228893143}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 8809158153820294901}
   - {fileID: 6823876591890087931}
-  stepPopupTexts:
-  - Takeout RFID keys
-  - Press Lock button
-  popupObject: {fileID: 1497532029}
-  popupTargets:
-  - {fileID: 7187476507839239687}
-  - {fileID: 3402458836191429862}
-  popupOffset: {x: 0, y: 0.055, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: a2a5c2d5f7b85914098a791f822df048, type: 3}
-    subtitle: Please lockout the rollstand.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -6170,20 +6155,8 @@ MonoBehaviour:
   zoomCam: {fileID: 1335230233}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 1268110017}
-  stepPopupTexts:
-  - Open the door
-  popupObject: {fileID: 1497532029}
-  popupTargets: []
-  popupOffset: {x: 1.5, y: 50, z: 0.15}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: e09f7f163c6c3e040820eef2bd9e75c5, type: 3}
-    subtitle: Now the gate can be opened.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -6852,24 +6825,8 @@ MonoBehaviour:
   zoomCam: {fileID: 1684473341}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 7655569662507174680}
-  stepPopupTexts:
-  - Press Stop button
-  popupObject: {fileID: 1497532029}
-  popupTargets:
-  - {fileID: 7157527529762761083}
-  popupOffset: {x: 0, y: 0, z: -0.12}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: c1b4e0544d7e54b4daaca36763d07bc0, type: 3}
-    subtitle: Welcome to DAK's Machine Safety Lockout Tagout Training, In this example
-      we will learn how to lockout and verify that energy is properly isolated on
-      this unwinder machine.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 31668a6c0d29b7541ad90e7b8b07f559, type: 3}
-    subtitle: The first step to locking out the machine is to stop the line. Press
-      the red button located on the bottom of the pushbutton box.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -7228,25 +7185,9 @@ MonoBehaviour:
   zoomCam: {fileID: 1028131189}
   transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 7781777749995200925}
   - {fileID: 8812335262666910676}
-  stepPopupTexts:
-  - Press E2
-  - Press P2
-  popupObject: {fileID: 1497532029}
-  popupTargets:
-  - {fileID: 7781777749995200923}
-  - {fileID: 8812335262666910674}
-  popupOffset: {x: 0, y: 0.05, z: 0}
-  beforeTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to reach the next step.
-  afterTriggerSubtitleData:
-  - clip: {fileID: 8300000, guid: 72e14015751416a42a4c6b28f96e6aeb, type: 3}
-    subtitle: Turn off the Electrical Disconnect E2 and the Pneumatic Disconnect
-      P2 and place two locks off your belt on each of the Energy Isolation devices.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64

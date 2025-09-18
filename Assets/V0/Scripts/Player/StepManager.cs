@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 [System.Serializable]
 public class Step
 {
-    [Tooltip("The exact component that represents this step task")]
-    public StepInteractable task;
+    [Tooltip("The exact component that represents this step Interactables")]
+    public List <StepInteractable> Interactables;
+
+    public UnityEvent OnstepTrigger;
+   
 
 }
 
@@ -22,11 +27,14 @@ public class StepManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public bool IsCurrentStep(StepInteractable task)
-    {
-        if (currentStep >= steps.Count) return false;
-        return steps[currentStep].task == task;
-    }
+    //public bool IsCurrentStep(StepInteractable task)
+    //{
+    //    if (currentStep >= steps.Count)
+    //    {
+    //        steps[currentStep].OnstepTrigger.Invoke();
+    //    }
+    //    return steps[currentStep].Interactables == task;
+    //}
 
     public void CompleteCurrentStep()
     {
@@ -37,5 +45,13 @@ public class StepManager : MonoBehaviour
 
         if (currentStep >= steps.Count)
             Debug.Log("All steps completed!");
+    }
+
+    public void RegisterStep()
+    {
+        while (currentStep <= steps.Count)
+        {
+            steps[currentStep].OnstepTrigger.Invoke();
+        }
     }
 }

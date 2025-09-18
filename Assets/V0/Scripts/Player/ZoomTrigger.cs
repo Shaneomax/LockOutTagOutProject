@@ -15,20 +15,10 @@ public class ZoomTrigger : MonoBehaviour
 
     [Header("References")]
     public PlayerController playerController;
-    public GameObject subtitleImage;
 
     [Header("Step Tasks")]
     public List<StepInteractable> stepTasks = new();
-    public List<string> stepPopupTexts = new();
-    public GameObject popupObject;
 
-    [Header("Popup Targets (Manual Assign)")]
-    public List<Transform> popupTargets = new(); 
-    public Vector3 popupOffset = new(0f, 2f, 0f); 
-
-    [Header("Subtitles")]
-    public List<SubtitleData> beforeTriggerSubtitleData = new();
-    public List<SubtitleData> afterTriggerSubtitleData = new();
 
     [Header("Outline Layers")]
     public LayerMask outlineLayerMask;
@@ -36,8 +26,7 @@ public class ZoomTrigger : MonoBehaviour
     public bool restoreOriginalOnDisable = false;
     public bool setChildren = true;
 
-    private TextMeshProUGUI popupTMP;
-    private Canvas canvas;
+   
     private int outlineLayerIndex, fallbackLayerIndex;
     private Dictionary<Transform, int> originalLayers = new();
 
@@ -51,12 +40,6 @@ public class ZoomTrigger : MonoBehaviour
 
     private void Awake()
     {
-        if (popupObject)
-        {
-            popupTMP = popupObject.GetComponentInChildren<TextMeshProUGUI>();
-            popupObject.SetActive(false);
-            canvas = popupObject.GetComponentInParent<Canvas>();
-        }
 
         outlineLayerIndex = GetFirstLayerIndex(outlineLayerMask);
         fallbackLayerIndex = Mathf.Max(0, GetFirstLayerIndex(fallbackLayerMask));
@@ -86,10 +69,6 @@ public class ZoomTrigger : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            PlaySubtitlesWithImage(afterTriggerSubtitleData);
-
-            if (outlineLayerIndex >= 0) EnableOutlineForCurrentTask();
-            ShowStepPopup();
         });
     }
 
@@ -117,53 +96,12 @@ public class ZoomTrigger : MonoBehaviour
         DOVirtual.DelayedCall(transitionDuration, onComplete);
     }
 
-    private void ShowStepPopup()
-    {
-        if (!popupObject || !popupTMP || tasksCompleted >= stepTasks.Count) return;
-
-        popupTMP.text = tasksCompleted < stepPopupTexts.Count ? stepPopupTexts[tasksCompleted] : "";
-
-        // pick popup target from list
-        if (tasksCompleted < popupTargets.Count)
-            currentPopupTarget = popupTargets[tasksCompleted];
-        else
-            currentPopupTarget = stepTasks[tasksCompleted].transform; // fallback if not assigned
-
-        popupObject.SetActive(true);
-    }
-
-    private void HideStepPopup()
-    {
-        popupObject?.SetActive(false);
-        currentPopupTarget = null;
-    }
-
-    private void Update()
-    {
-        if (isZoomed && popupObject && currentPopupTarget)
-            UpdatePopupPosition();
-    }
-
-    private void UpdatePopupPosition()
-    {
-        Vector3 worldPos = currentPopupTarget.position + popupOffset;
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-
-        if (canvas && RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
-            screenPos,
-            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out Vector2 localPoint))
-        {
-            popupObject.GetComponent<RectTransform>().localPosition = localPoint;
-        }
-    }
+    
 
     public void RegisterTaskCompletion(StepInteractable task)
     {
         if (!isZoomed || !stepTasks.Contains(task)) return;
 
-        HideStepPopup();
         DisableOutlineForTask(task);
 
         tasksCompleted++;
@@ -171,7 +109,6 @@ public class ZoomTrigger : MonoBehaviour
         if (tasksCompleted < stepTasks.Count)
         {
             EnableOutlineForCurrentTask();
-            ShowStepPopup();
         }
         else
         {
@@ -186,20 +123,7 @@ public class ZoomTrigger : MonoBehaviour
         ZoomOut();
     }
 
-    public void PlayBeforeAudios() => PlaySubtitlesWithImage(beforeTriggerSubtitleData);
-
-    private void PlaySubtitlesWithImage(List<SubtitleData> subtitles)
-    {
-        if (subtitleImage) subtitleImage.SetActive(true);
-        StartCoroutine(PlaySubtitlesCoroutine(subtitles));
-    }
-
-    private IEnumerator PlaySubtitlesCoroutine(List<SubtitleData> subtitles)
-    {
-        yield return TextManager.Instance.PlayWithSubtitlesCoroutine(FindObjectOfType<AudioSource>(), subtitles);
-        if (subtitleImage) subtitleImage.SetActive(false);
-    }
-
+    
     private int GetFirstLayerIndex(LayerMask mask)
     {
         int m = mask.value;

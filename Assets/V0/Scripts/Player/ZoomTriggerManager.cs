@@ -15,8 +15,6 @@ public class ZoomTriggerManager : MonoBehaviour
             triggers[i].onZoomOutCompleted = OnTriggerZoomOutCompleted;
         }
 
-        if (triggers.Count > 0)
-            triggers[currentIndex].PlayBeforeAudios();
     }
 
     private void OnTriggerZoomOutCompleted(ZoomTrigger completedTrigger)
@@ -27,7 +25,6 @@ public class ZoomTriggerManager : MonoBehaviour
         if (currentIndex < triggers.Count)
         {
             triggers[currentIndex].gameObject.SetActive(true);
-            triggers[currentIndex].PlayBeforeAudios();
         }
     }
 

@@ -7,11 +7,8 @@ public class ButtonPress : StepInteractable
 
     protected override void OnStepInteract()
     {
-        if (StepManager.Instance.IsCurrentStep(this))
-        {
-            onInteract?.Invoke();
-            StepManager.Instance.CompleteCurrentStep();
-        }
         
+            onInteract?.Invoke();
+
     }
 }
