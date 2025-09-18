@@ -228,7 +228,7 @@ MonoBehaviour:
   - task: {fileID: 7655569662507174680}
   - task: {fileID: 8809158153820294901}
   - task: {fileID: 6823876591890087931}
-  - task: {fileID: 1646139811}
+  - task: {fileID: 1268110017}
   - task: {fileID: 6399323212844827486}
   - task: {fileID: 9091868689900470931}
   - task: {fileID: 7781777749995200925}
@@ -725,6 +725,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1469323204}
   - {fileID: 330585546}
   - {fileID: 1678564326}
   m_Father: {fileID: 0}
@@ -902,6 +903,81 @@ MonoBehaviour:
   moveSpeed: 5
   canMove: 1
   interactCooldown: 0.2
+--- !u!1 &274143614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274143616}
+  - component: {fileID: 274143615}
+  m_Layer: 0
+  m_Name: Zoom7Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &274143615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274143614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!4 &274143616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274143614}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.11126995, y: 16.970001, z: 0.08287001}
+  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1242470694}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &307633255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1133,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
+  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1105,7 +1182,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1131,8 +1208,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.025959969, y: 0.70000005, z: 0.14177036}
+  m_LocalRotation: {x: 0, y: 0, z: -0.00002621549, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1196,6 +1273,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   playerBody: {fileID: 269459194}
   mouseSensitivity: 30
+--- !u!114 &330585549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBrain
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  CustomBlends: {fileID: 0}
 --- !u!1 &354110549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -504073769414703287, guid: e80f283031579524ab5489370f461a32, type: 3}
@@ -2126,6 +2235,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468217279}
   m_CullTransparentMesh: 1
+--- !u!1 &472114360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 472114361}
+  - component: {fileID: 472114362}
+  m_Layer: 0
+  m_Name: Zoom6Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &472114361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472114360}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.11126995, y: 16.970001, z: 0.08287001}
+  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 990328579}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &472114362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472114360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
 --- !u!1 &539454336 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7609145667655734672, guid: e80f283031579524ab5489370f461a32, type: 3}
@@ -3162,7 +3346,8 @@ Transform:
   m_LocalPosition: {x: 6.154, y: -0.50507, z: 1.704}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 472114361}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &990328580
@@ -3177,23 +3362,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 732215614444760032}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 472114362}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
+  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 6793626559227101020}
   - {fileID: 5652956223017763106}
   stepPopupTexts:
-  - Press Reset Button
-  - Press Start Button
+  - Press Restart button
+  - Press Start button
   popupObject: {fileID: 1497532029}
-  popupOffset: {x: 1.5, y: 50, z: 0}
+  popupTargets:
+  - {fileID: 4110279371860367426}
+  - {fileID: 4681035381516450972}
+  popupOffset: {x: 0, y: 0, z: -0.15}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to go next step.
+    subtitle: Follow the trail to reach the next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: d63a871f1dc8d2643882b8e7f1c44bbc, type: 3}
     subtitle: Now you need to verify that the line can't be allowed to restart by
@@ -3207,7 +3394,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &990328581
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3417,6 +3603,156 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.004150774, y: 0.020953663, z: 0.004150774}
   m_Center: {x: 9.313226e-10, y: -9.313226e-10, z: 0.0000000018626451}
+--- !u!1 &1028131187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028131188}
+  - component: {fileID: 1028131189}
+  m_Layer: 0
+  m_Name: Zoom5Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1028131188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028131187}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5230007, y: 13.91, z: 0.238}
+  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2110549000}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1028131189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028131187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!1 &1047731788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1047731789}
+  - component: {fileID: 1047731790}
+  m_Layer: 0
+  m_Name: Zoom4Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1047731789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047731788}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.138731, y: 13.69, z: 0.1438694}
+  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1478799455}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1047731790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047731788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
 --- !u!1 &1050817677 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4853787609957081483, guid: e80f283031579524ab5489370f461a32, type: 3}
@@ -3504,7 +3840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -365}
+  m_AnchoredPosition: {x: 0, y: -421}
   m_SizeDelta: {x: 1290, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1213666108
@@ -3545,6 +3881,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213666106}
   m_CullTransparentMesh: 1
+--- !u!1 &1228893141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1228893142}
+  - component: {fileID: 1228893143}
+  m_Layer: 0
+  m_Name: Zoom2Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1228893142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228893141}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.3117299, y: 15.94, z: -0.22012997}
+  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1685034770}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1228893143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228893141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
 --- !u!1 &1242470690
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,7 +4044,8 @@ Transform:
   m_LocalPosition: {x: 6.154, y: -0.50507, z: 1.704}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 274143616}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1242470695
@@ -3648,16 +4060,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 4681035381516450972}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 274143615}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
-  stepTasks:
-  - {fileID: 5652956223017763106}
+  subtitleImage: {fileID: 1213666106}
+  stepTasks: []
   stepPopupTexts: []
   popupObject: {fileID: 0}
+  popupTargets: []
   popupOffset: {x: 1.5, y: 1, z: 0}
   beforeTriggerSubtitleData: []
   afterTriggerSubtitleData:
@@ -3672,7 +4083,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &1242470696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3713,7 +4123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1268110017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3744,7 +4154,11 @@ Transform:
   m_LocalPosition: {x: 6.2539763, y: 0.82133657, z: 5.5439854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4582024652173292532}
+  - {fileID: 3954477847671861292}
+  - {fileID: 1925328229004447995}
+  - {fileID: 5953562617558930516}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1268110019
@@ -3775,7 +4189,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268110016}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3939,6 +4353,81 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.008203779, y: 0.020953663, z: 0.008203779}
   m_Center: {x: -0.0000000018626451, y: -9.313226e-10, z: 9.313226e-10}
+--- !u!1 &1335230232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1335230234}
+  - component: {fileID: 1335230233}
+  m_Layer: 0
+  m_Name: Zoom3Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1335230233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335230232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!4 &1335230234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335230232}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.5037298, y: 8.91, z: 0.6879997}
+  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1717429752}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1420550851 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4700127534695410439, guid: e80f283031579524ab5489370f461a32, type: 3}
@@ -4106,6 +4595,81 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1 &1469323202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1469323204}
+  - component: {fileID: 1469323203}
+  m_Layer: 0
+  m_Name: CinemachineCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1469323203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469323202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 1
+    m_Value: 10
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!4 &1469323204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469323202}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 269459194}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478799451
 GameObject:
   m_ObjectHideFlags: 0
@@ -4194,7 +4758,8 @@ Transform:
   m_LocalPosition: {x: 8.924, y: -0.50507, z: 8.444}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1047731789}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1478799456
@@ -4209,12 +4774,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 1910320513576635836}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 1047731790}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
+  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 6399323212844827486}
   - {fileID: 9091868689900470931}
@@ -4222,10 +4786,13 @@ MonoBehaviour:
   - Press E1
   - Press P1
   popupObject: {fileID: 1497532029}
-  popupOffset: {x: 1.5, y: 50, z: 0}
+  popupTargets:
+  - {fileID: 6399323212844827484}
+  - {fileID: 8075160947501164692}
+  popupOffset: {x: 0, y: 0.05, z: 0}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to go next step.
+    subtitle: Follow the trail to reach the next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 9d974e11a0952494a9bf0839cea8edfe, type: 3}
     subtitle: Turn off the Electrical Disconnect E1 and the Pneumatic Disconnect
@@ -4238,7 +4805,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &1478799457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4836,7 +5402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1646139810
 Transform:
   m_ObjectHideFlags: 0
@@ -4849,11 +5415,7 @@ Transform:
   m_LocalPosition: {x: 6.356, y: 0.84, z: 5.284}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4582024652173292532}
-  - {fileID: 3954477847671861292}
-  - {fileID: 1925328229004447995}
-  - {fileID: 5953562617558930516}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1646139811
@@ -5003,6 +5565,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678564325}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1684473340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1684473342}
+  - component: {fileID: 1684473341}
+  m_Layer: 0
+  m_Name: Zoom1Cam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1684473341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684473340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 10
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 7157527529762761083}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!4 &1684473342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684473340}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.07251984, y: 0.67850924, z: -0.06760753, w: 0.7278704}
+  m_LocalPosition: {x: 0.43973017, y: 14.22, z: 0.79787004}
+  m_LocalScale: {x: 1, y: 7.4052243, z: 1.0363122}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2052942799}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1685034766
 GameObject:
   m_ObjectHideFlags: 0
@@ -5091,7 +5728,8 @@ Transform:
   m_LocalPosition: {x: 5.921, y: -0.50507, z: 6.994}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1228893142}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1685034771
@@ -5106,23 +5744,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 6296965327755918596}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 1228893143}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
+  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 8809158153820294901}
   - {fileID: 6823876591890087931}
   stepPopupTexts:
-  - Takeout RFID key
-  - Press Door Button
+  - Takeout RFID keys
+  - Press Lock button
   popupObject: {fileID: 1497532029}
-  popupOffset: {x: 1.5, y: 50, z: 0}
+  popupTargets:
+  - {fileID: 7187476507839239687}
+  - {fileID: 3402458836191429862}
+  popupOffset: {x: 0, y: 0.055, z: 0}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to go next step.
+    subtitle: Follow the trail to reach the next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: a2a5c2d5f7b85914098a791f822df048, type: 3}
     subtitle: Please lockout the rollstand.
@@ -5134,7 +5774,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &1685034772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5533,10 +6172,11 @@ Transform:
   m_GameObject: {fileID: 1717429748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.485, y: -0.50507, z: 4.6778703}
+  m_LocalPosition: {x: 5.911, y: -0.50507, z: 4.64}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1335230234}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1717429753
@@ -5551,24 +6191,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 4582024652173292532}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 1335230233}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
+  subtitleImage: {fileID: 1213666106}
   stepTasks:
-  - {fileID: 1646139811}
+  - {fileID: 1268110017}
   stepPopupTexts:
-  - Open The Door
+  - Open the door
   popupObject: {fileID: 1497532029}
-  popupOffset: {x: 1.5, y: 50, z: 0}
+  popupTargets: []
+  popupOffset: {x: 1.5, y: 50, z: 0.15}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to go next step.
+    subtitle: Follow the trail to reach the next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: e09f7f163c6c3e040820eef2bd9e75c5, type: 3}
-    subtitle: Now the gate can be opened
+    subtitle: Now the gate can be opened.
   outlineLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -5577,7 +6217,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &1717429754
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6218,7 +6857,8 @@ Transform:
   m_LocalPosition: {x: 6.219, y: -0.50507, z: 0.872}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1684473342}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2052942800
@@ -6233,18 +6873,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 7157527529762761083}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 1684473341}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
+  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 7655569662507174680}
   stepPopupTexts:
-  - Press The Red Button
+  - Press Stop button
   popupObject: {fileID: 1497532029}
-  popupOffset: {x: 150, y: -10, z: 0}
+  popupTargets:
+  - {fileID: 7157527529762761083}
+  popupOffset: {x: 0, y: 0, z: -0.12}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: c1b4e0544d7e54b4daaca36763d07bc0, type: 3}
     subtitle: Welcome to DAK's Machine Safety Lockout Tagout Training, In this example
@@ -6262,7 +6903,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &2052942801
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6593,7 +7233,8 @@ Transform:
   m_LocalPosition: {x: 9.550731, y: -0.50507, z: 0.23287001}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1028131188}
   m_Father: {fileID: 752796419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2110549001
@@ -6608,12 +7249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa259430d00e5a54e9de61016103a4ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoomTrigger
-  playerCamera: {fileID: 330585545}
-  zoomFOV: 30
-  zoomDuration: 0.5
-  target: {fileID: 2727362082684701253}
-  rotateDuration: 0.5
+  defaultCam: {fileID: 1469323203}
+  zoomCam: {fileID: 1028131189}
+  transitionDuration: 0.3
   playerController: {fileID: 269459197}
+  subtitleImage: {fileID: 1213666106}
   stepTasks:
   - {fileID: 7781777749995200925}
   - {fileID: 8812335262666910676}
@@ -6621,10 +7261,13 @@ MonoBehaviour:
   - Press E2
   - Press P2
   popupObject: {fileID: 1497532029}
-  popupOffset: {x: 1.5, y: 50, z: 0}
+  popupTargets:
+  - {fileID: 7781777749995200923}
+  - {fileID: 8812335262666910674}
+  popupOffset: {x: 0, y: 0.05, z: 0}
   beforeTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 991df0ea68cf8a246a85f2e3a6d1bb07, type: 3}
-    subtitle: Follow the trail to go next step.
+    subtitle: Follow the trail to reach the next step.
   afterTriggerSubtitleData:
   - clip: {fileID: 8300000, guid: 72e14015751416a42a4c6b28f96e6aeb, type: 3}
     subtitle: Turn off the Electrical Disconnect E2 and the Pneumatic Disconnect
@@ -6637,7 +7280,6 @@ MonoBehaviour:
     m_Bits: 0
   restoreOriginalOnDisable: 0
   setChildren: 1
-  subtitleImage: {fileID: 1213666106}
 --- !u!65 &2110549002
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7477,6 +8119,7 @@ GameObject:
   - component: {fileID: 2602154688661427301}
   - component: {fileID: 4418621647608190782}
   - component: {fileID: 6156874743943999907}
+  - component: {fileID: 6156874743943999908}
   m_Layer: 0
   m_Name: Doors
   m_TagString: Untagged
@@ -13837,11 +14480,11 @@ Transform:
   m_GameObject: {fileID: 6914319636445884433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.023009777, y: -0.13667744, z: -1.3625903}
+  m_LocalPosition: {x: 0.12503338, y: -0.11801404, z: -1.6225758}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1646139810}
+  m_Father: {fileID: 1268110018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1927093846695174645
 MeshRenderer:
@@ -20938,11 +21581,11 @@ Transform:
   m_GameObject: {fileID: 6883046547550864069}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.033420086, y: -0.13381606, z: -0.7624402}
+  m_LocalPosition: {x: 0.068603516, y: -0.11515266, z: -1.0224257}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1646139810}
+  m_Father: {fileID: 1268110018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3955040439348693041
 GameObject:
@@ -23659,12 +24302,12 @@ Transform:
   m_GameObject: {fileID: 3578215635213141830}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.081899166, y: -0.1309548, z: -0.18130589}
+  m_LocalPosition: {x: 0.020124435, y: -0.112291396, z: -0.44129133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2602154688661427301}
-  m_Father: {fileID: 1646139810}
+  m_Father: {fileID: 1268110018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &4590093717017400985
 MeshRenderer:
@@ -29535,11 +30178,11 @@ Transform:
   m_GameObject: {fileID: 6965935994268307434}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08439541, y: -0.5157462, z: -1.9833653}
+  m_LocalPosition: {x: 0.18641901, y: -0.49708277, z: -2.2433507}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1646139810}
+  m_Father: {fileID: 1268110018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5955487809517243013
 Transform:
@@ -30241,6 +30884,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6156874743943999908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280040051275531225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be88d9bc69b651f4982fc7da37bf5cfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlidingDoor
+  doorParts:
+  - {fileID: 4582024652173292532}
+  - {fileID: 3954477847671861292}
+  - {fileID: 1925328229004447995}
+  - {fileID: 5953562617558930516}
+  moveSpeed: 2
 --- !u!4 &6170834232858397887
 Transform:
   m_ObjectHideFlags: 0
