@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   playerBody: {fileID: 269459194}
-  mouseSensitivity: 30
+  mouseSensitivity: 10
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
