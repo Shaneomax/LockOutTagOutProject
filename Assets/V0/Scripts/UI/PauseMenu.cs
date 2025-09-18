@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pausePanel;
 
     private bool isPaused = false;
+    private bool wasCursorVisibleBeforePause = false;
 
     private void Start()
     {
@@ -38,6 +39,9 @@ public class PauseMenu : MonoBehaviour
         if (pausePanel != null)
             pausePanel.SetActive(true);
 
+        // Remember current cursor state
+        wasCursorVisibleBeforePause = Cursor.visible;
+
         Time.timeScale = 0f;
         isPaused = true;
 
@@ -55,8 +59,17 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Restore cursor state
+        if (wasCursorVisibleBeforePause)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         Debug.Log("Game Resumed - Panel Hidden");
     }
@@ -70,7 +83,7 @@ public class PauseMenu : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()
