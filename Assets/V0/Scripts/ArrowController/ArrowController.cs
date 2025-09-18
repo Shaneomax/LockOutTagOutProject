@@ -15,6 +15,7 @@ public class ArrowController : MonoBehaviour
     {
         if (player == null || arrow == null || triggerManager == null) return;
 
+        // Position arrow above the player with forward offset
         arrow.position = player.position + Vector3.up * arrowHeight + player.forward * forwardOffset;
 
         ZoomTrigger targetTrigger = triggerManager.GetCurrentTrigger();
@@ -28,8 +29,13 @@ public class ArrowController : MonoBehaviour
             direction.y = 0f;
 
             if (direction != Vector3.zero)
-                arrow.rotation = Quaternion.LookRotation(direction);
+            {
+                // Base look rotation
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+                // Add 90 degrees on Z axis
+                arrow.rotation = lookRotation * Quaternion.Euler(0f, 0f, 90f);
+            }
         }
-        
     }
 }
